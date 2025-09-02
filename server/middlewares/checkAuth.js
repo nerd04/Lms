@@ -15,7 +15,7 @@ export const authUser = (req, res, next) => {
     }
     console.log("Decoded token:", decoded);
     req.userId = decoded.userId;
-    res.send(200).json({ message: "access granted " });
+    
     next();
   } catch (error) {
     console.error("JWT verification failed:", error);

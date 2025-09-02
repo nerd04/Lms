@@ -1,10 +1,13 @@
 import React from "react";
+import Navbar from "../components/Navbar";
 
 function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-indigo-50 px-6">
+    <>
+      <Navbar/>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-indigo-50 px-6 bg-[url('/src/assets/hero-bg-img.png')] bg-cover bg-center bg-opacity-50">
       {/* Hero Section */}
-      <div className="max-w-3xl text-center">
+      <div className="max-w-3xl text-center ">
         <h1 className="text-4xl md:text-6xl font-bold text-indigo-700 drop-shadow-sm">
           Welcome to <span className="text-orange-500">We Learn</span>
         </h1>
@@ -24,11 +27,12 @@ function Home() {
         </div>
       </div>
 
+    </div>
       {/* Footer */}
       <footer className="mt-12 text-gray-500 text-sm">
         © {new Date().getFullYear()} We Learn. All rights reserved.
       </footer>
-    </div>
+    </>
   );
 }
 
