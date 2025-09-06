@@ -56,8 +56,8 @@ function Navbar() {
             />
           </div>}
           {showProfileOptions && <div className="absolute top-[10%] left-[75%] flex flex-items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-[#a18bb6] px-[15px] py-[10px] border-[2px] border-[#4c0460] hover:border-[#a18bb6] hover:text-cursor-pointer hover:bg-[#4c0460]">
-            <span className='hover:cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-500'>My Profile</span><hr />
-            <span className='hover:cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-500'>My Courses</span>
+            <button onClick={()=>navigate('/profile')} className='hover:cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-500'>My Profile</button><hr />
+            <button className='hover:cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-500'>My Courses</button>
           </div>}
 
           {/* Dashboard Button */}
@@ -100,7 +100,7 @@ function Navbar() {
             </div>
 
             {/* Profile Button */}
-            <button className="px-4 py-2 w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950  sm:px-2 sm:py-1">
+            <button onClick={()=>navigate('/profile')} className="px-4 py-2 w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950  sm:px-2 sm:py-1">
               Profile
             </button>
 
