@@ -96,7 +96,7 @@ function Login() {
           </button>
 
           {/* Reset Password */}
-          <span className='text-[13px] cursor-pointer text-[#a18bb6] '>Forget your Password ?</span>
+          <span className='text-[13px] cursor-pointer text-[#a18bb6] ' onClick={()=>navigate("/forget-password")}>Forget your Password ?</span>
 
           {/* Divider */}
           <div className="w-full flex items-center gap-2">

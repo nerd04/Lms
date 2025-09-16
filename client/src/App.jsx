@@ -2,6 +2,7 @@ import './App.css'
 import Home from './pages/Home'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
+import ForgetPassword from './pages/ForgetPassword'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import getCurrentUser from './customHooks/getCurrentUser'
@@ -26,6 +27,7 @@ function App() {
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/profile' element={userData ? <Profile/> : <Navigate to="/signup" /> }/>
+      <Route path='/forget-password' element={<ForgetPassword/>  }/>
     </Routes>
     </>
   )
