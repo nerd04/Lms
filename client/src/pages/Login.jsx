@@ -8,6 +8,8 @@ import { serverUrl } from '../App';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../utils/firebase';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,6 +44,32 @@ function Login() {
       console.log(error)
       setLoading(false)
       toast.error(error.response.data.message)
+    }
+  }
+
+
+
+
+  const googleLogin = async () => {
+    try {
+      const res = await signInWithPopup(auth, provider);
+      let user = res.user;
+      let name = user.displayName;
+      let email = user.email;
+
+      const response = await axios.post(`${serverUrl}/api/auth/googleauth`,
+        {
+          email,
+          name
+        }, { withCredentials: true });
+
+      dispatch(setUserData(response.data))
+      navigate('/')
+      toast.success("Login successfull")
+
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message);
     }
   }
 
@@ -106,10 +134,10 @@ function Login() {
           </div>
 
           {/* Google Button */}
-          <button className="w-full flex items-center justify-center gap-2 border border-[#a18bb6] py-2 rounded-lg hover:bg-gray-100 transition">
+          <span onClick={googleLogin} className="w-full flex items-center justify-center gap-2 border border-[#a18bb6] py-2 rounded-lg hover:bg-gray-100 transition">
             <img src={google} className="w-5" alt="Google" />
             <span className="text-[#4c0460] font-medium">Sign In with Google</span>
-          </button>
+          </span>
 
 
           <div className="text-[#a18bb6]">Create a new Account ? <span onClick={() => navigate('/signup')} className="underline underline-offset-1 text-[#4c0460] cursor-pointer">Sign Up</span>

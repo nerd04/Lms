@@ -146,3 +146,26 @@ export const resetPassword = async(req, res)=>{
         return res.status(500).json({message: `Password reset error in step 3 : ${error}`});
     }
 }
+
+
+export const googleAuth = async(req, res)=>{
+    try {
+        const {name, email} = req.body;
+        const user = await User.findOne({email});
+        if(!user){
+            const role = req.body;
+            user = await User.create({name,email,role});
+        }
+        const token = await generateToken(user._id);
+        res.cookie("token", token, {
+            httpOnly:true,
+            secure: true,
+            sameSize: "Strict",
+            maxAge: 7*24*60*60*1000
+        })
+        return res.status(200).json(user);
+
+    } catch (error) {
+        return res.status(500).json({message: `Google Auth Error: ${error}`});
+    }
+}
