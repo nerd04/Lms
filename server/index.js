@@ -24,7 +24,7 @@ app.get('/', (req, res)=>{
     
 })
 
-app.listen(process.env.PORT, (req, res)=>{
+app.listen(process.env.FRONTEND_URL, (req, res)=>{
     connectDB();
-    console.log("Server started listening on ",process.env.PORT);
+    console.log("Server started listening on ",process.env.FRONTEND_URL);
 })
