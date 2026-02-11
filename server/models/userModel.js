@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String,
-        default: "",
+        default: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
     },
     enrolledCourses: [{
         type: mongoose.Schema.Types.ObjectId,
