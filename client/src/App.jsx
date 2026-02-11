@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import Profile from './pages/Profile'
 
 
-export const serverUrl = `${import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL}`
+export const serverUrl = "https://lms-ruby-one.vercel.app/"
 
 function App() {
 
