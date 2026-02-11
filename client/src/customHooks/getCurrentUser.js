@@ -17,7 +17,7 @@ const getCurrentUser = () => {
         }
     }
     fetchUser()
-  },[])
+  },[dispatch])
 }
 
 export default getCurrentUser

@@ -1,28 +1,25 @@
 import React, { useRef, useState } from "react";
-import logo from "/logo.png";
-import google from "../assets/google.png";
 import { useNavigate } from "react-router-dom";
-import { serverUrl } from "../App";
 import { toast } from "react-toastify";
-import { ClipLoader } from 'react-spinners'
-import axios from 'axios'
+
+import google from "../assets/google.png";
+import { serverUrl } from "../App";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/userSlice";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/firebase";
+import { motion } from "framer-motion";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-
+  const [role, setRole] = useState("student");
+  const [loading, setLoading] = useState(false);
   const name = useRef();
   const email = useRef();
   const password = useRef();
-  const [role, setRole] = useState("student")
-
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -30,162 +27,134 @@ function Signup() {
     const emailVal = email.current.value;
     const passwordVal = password.current.value;
 
-    console.log(name.current.value)
-    console.log(email.current.value)
-    console.log(password.current.value)
-    console.log(role)
-
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = await axios.post(`${serverUrl}/api/auth/signup`, {
-        name: nameVal,
-        email: emailVal,
-        password: passwordVal,
-        role: role
-      }, { withCredentials: true })
-      console.log(res.data);
-      dispatch(setUserData(res.data))
-      setLoading(false)
-      navigate("/")
-      toast.success("Sign up successfully")
+      const res = await axios.post(
+        `${serverUrl}/api/auth/signup`,
+        { name: nameVal, email: emailVal, password: passwordVal, role },
+        { withCredentials: true }
+      );
+      dispatch(setUserData(res.data));
+      setLoading(false);
+      navigate("/");
+      toast.success("Signed up successfully!");
     } catch (error) {
-      console.log(error)
-      setLoading(false)
-      toast.error(error.response.data.message)
+      setLoading(false);
+      toast.error(error.response?.data?.message || "Signup failed");
     }
-
-  }
-
-
+  };
 
   const googleSignUp = async () => {
     try {
       const res = await signInWithPopup(auth, provider);
-      let user = res.user;
-      let name = user.displayName;
-      let email = user.email;
-
-      const response = await axios.post(`${serverUrl}/api/auth/googleauth`,
-        {
-          email,
-          name,
-          role
-        }, { withCredentials: true });
-
-      dispatch(setUserData(response.data))
-      navigate('/')
-      toast.success("Signup successfull")
-
+      const user = res.user;
+      const response = await axios.post(
+        `${serverUrl}/api/auth/googleauth`,
+        { email: user.email, name: user.displayName, role },
+        { withCredentials: true }
+      );
+      dispatch(setUserData(response.data));
+      navigate("/");
+      toast.success("Signed up successfully!");
     } catch (error) {
-      console.log(error)
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Google signup failed");
     }
-  }
-
-
-
-
-
-
-
+  };
 
   return (
-    <div className="bg-[#dddbdb] w-screen h-screen flex items-center justify-center">
-      {/* Form Container */}
-      <form className="w-[90%] md:w-[800px] h-[600px] bg-white shadow-xl rounded-2xl flex overflow-hidden" onSubmit={handleSignUp}>
-        {/* Left Section */}
-        <div className="md:w-1/2 w-full h-full flex flex-col items-center justify-center gap-5 px-8 py-6">
-          {/* Title */}
-          <div className="text-center">
-            <h1 className="font-bold text-[#4c0460] text-3xl">Let's get started</h1>
-            <h2 className="text-[#a18bb6] text-lg">Create Your Account</h2>
-          </div>
+    <div className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-950 via-purple-950 to-blue-950">
+      {/* Animated gradient blobs */}
+      <div className="absolute w-80 h-80 bg-purple-600/30 blur-3xl rounded-full -top-24 -left-20 animate-pulse"></div>
+      <div className="absolute w-96 h-96 bg-blue-500/30 blur-3xl rounded-full bottom-0 right-0 animate-pulse"></div>
 
-          {/* Name */}
-          <div className="w-full">
-            <input
-              id="name"
-              type="text"
-              ref={name}
-              placeholder="Your name"
-              className="w-full border border-[#a18bb6] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#4c0460]"
-            />
-          </div>
+      <motion.form
+        onSubmit={handleSignUp}
+        initial={{ opacity: 0, scale: 0.9, y: 40 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative w-[90%] sm:w-[450px] bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-8 text-white flex flex-col gap-5"
+      >
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
+          Create Your Account
+        </h2>
 
-          {/* Email */}
-          <div className="w-full">
-            <input
-              id="email"
-              type="email"
-              ref={email}
-              placeholder="Your email"
-              className="w-full border border-[#a18bb6] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#4c0460]"
-            />
-          </div>
-
-          {/* Password with Toggle */}
-          <div className="w-full relative">
-            <input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              ref={password}
-              placeholder="Enter password"
-              className="w-full border border-[#a18bb6] rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-[#4c0460]"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-2.5 text-gray-500 hover:text-[#4c0460] focus:outline-none"
-            >
-              {showPassword ? "🙈" : "👁️"}
-            </button>
-          </div>
-
-          {/* Role Selection */}
-          <div className="flex w-full items-center justify-between">
-            <span className={`px-5 py-2 border-[2px] border-[#a18bb6] rounded-xl cursor-pointer hover:border-[#4c0460] ${role === "student" ? "border-black bg-[#c2aad7]" : "border-[#a18bb6]"}`} onClick={() => setRole("student")}>
-              Student
-            </span>
-            <span className={`px-5 py-2 border-2 border-[#a18bb6] rounded-xl cursor-pointer hover:border-[#4c0460] ${role === "educator" ? "border-black bg-[#c2aad7]" : "border-[#a18bb6]"}`} onClick={() => setRole("educator")}>
-              Educator
-            </span>
-          </div>
-
-          {/* Sign Up Button */}
-          <button className="w-full py-3 bg-[#4c0460] text-white font-semibold rounded-lg hover:bg-[#350142] transition " disabled={loading} type="submit">
-            {loading ? <ClipLoader size={25} color="purple" /> : "Sign Up"}
-
+        <input
+          ref={name}
+          type="text"
+          placeholder="Your Name"
+          className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+        />
+        <input
+          ref={email}
+          type="email"
+          placeholder="Your Email"
+          className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+        />
+        <div className="relative">
+          <input
+            ref={password}
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter Password"
+            className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 pr-10 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-2.5 text-gray-300 hover:text-white focus:outline-none"
+          >
+            {showPassword ? "🙈" : "👁️"}
           </button>
+        </div>
 
-          {/* Divider */}
-          <div className="w-full flex items-center gap-2">
-            <div className="flex-1 h-px bg-[#a18bb6]"></div>
-            <span className="text-sm text-[#4c0460]">Or continue</span>
-            <div className="flex-1 h-px bg-[#a18bb6]"></div>
-          </div>
-
-          {/* Google Button */}
-          <span onClick={googleSignUp} className="w-full flex items-center justify-center gap-2 border border-[#a18bb6] py-2 rounded-lg hover:bg-gray-100 transition">
-            <img src={google} className="w-5" alt="Google" />
-            <span className="text-[#4c0460] font-medium">Sign up with Google</span>
+        {/* Role Selection */}
+        <div className="flex gap-4 justify-center mt-2">
+          <span
+            onClick={() => setRole("student")}
+            className={`px-5 py-2 border-2 rounded-xl cursor-pointer ${
+              role === "student"
+                ? "border-white bg-white/20"
+                : "border-white/50 hover:border-white"
+            }`}
+          >
+            Student
           </span>
-
-
-
-
-          <div className="text-[#a18bb6]">already have an Account ? <span onClick={() => navigate('/login')} className="underline underline-offset-1 text-[#4c0460] cursor-pointer">Login</span>
-          </div>
+          <span
+            onClick={() => setRole("educator")}
+            className={`px-5 py-2 border-2 rounded-xl cursor-pointer ${
+              role === "educator"
+                ? "border-white bg-white/20"
+                : "border-white/50 hover:border-white"
+            }`}
+          >
+            Educator
+          </span>
         </div>
 
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-3 mt-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-semibold hover:scale-[1.02] transition-transform"
+        >
+          {loading ? "Signing Up..." : "Sign Up"}
+        </button>
 
-        {/* Right Section */}
-        <div className="hidden md:flex w-1/2 h-full bg-[#4c0460] items-center justify-center flex-col gap-3">
-          <img src={logo} className="w-32 shadow-2xl rounded-xl" alt="logo" />
-          <p className="text-white text-xl font-semibold">We Learn</p>
-        </div>
+        {/* Google SignUp */}
+        <button
+          type="button"
+          onClick={googleSignUp}
+          className="w-full flex items-center justify-center gap-2 border border-white/30 py-2 rounded-xl hover:bg-white/10 transition mt-2"
+        >
+          <img src={google} className="w-5" alt="Google" />
+          <span className="text-white font-medium">Sign Up with Google</span>
+        </button>
 
-
-      </form>
+        <p
+          onClick={() => navigate("/login")}
+          className="text-center text-purple-300 hover:underline cursor-pointer mt-3"
+        >
+          Already have an account? Login
+        </p>
+      </motion.form>
     </div>
   );
 }

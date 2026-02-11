@@ -1,150 +1,240 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { serverUrl } from '../App'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { setUserData } from '../redux/userSlice'
-import { toast } from 'react-toastify'
+import React, { useState } from "react";
+import axios from "axios";
+import { serverUrl } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUserData } from "../redux/userSlice";
+import { toast } from "react-toastify";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Navbar() {
-
-  const { userData } = useSelector(state => state.user);
-
+  const { userData } = useSelector((state) => state.user);
   const [showProfileOptions, setShowProfileOptions] = useState(false);
-  const [showHemOptions, setShowHemOptions] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
-      const res = await axios.get(`${serverUrl}/api/auth/logout`, { withCredentials: true });
-      console.log(res)
-      dispatch(setUserData(null))
-      toast.success(res.data.message)
+      const res = await axios.get(`${serverUrl}/api/auth/logout`, {
+        withCredentials: true,
+      });
+      dispatch(setUserData(null));
+      toast.success(res.data.message);
     } catch (error) {
-      console.log(error)
-      toast.error(error.response.data.message)
+      toast.error(error.response?.data?.message || "Logout failed");
     }
-  }
+  };
 
-  const navigate = useNavigate()
-  const handleLogin = () => {
-    navigate('/login')
-  }
   return (
     <>
-      <nav className="flex justify-between items-center p-4 bg-gray-800 text-white">
-        {/* Logo */}
-        <div className="flex items-center">
-          <img
-            src="/logo.png"
-            alt="Logo"
-            className="h-10 w-auto sm:h-6"
-          />
-        </div>
-
-        {/* Right Section (Profile Image, Dashboard, Logout) */}
-        <div className="lg:flex items-center space-x-4 hidden">
-          {/* Profile Image */}
-
-          {userData && <div onClick={() => setShowProfileOptions(prev => !prev)} className="w-10 h-10 rounded-full overflow-hidden">
-            <img
-              src={`${userData?.imageUrl ? `${userData.imageUrl}` : '/src/assets/profile-icon.png'}`}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </div>}
-          {showProfileOptions && <div className="absolute top-[10%] left-[75%] flex flex-items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-[#a18bb6] px-[15px] py-[10px] border-[2px] border-[#4c0460] hover:border-[#a18bb6] hover:text-cursor-pointer hover:bg-[#4c0460]">
-            <button onClick={()=>navigate('/profile')} className='hover:cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-500'>My Profile</button><hr />
-            <button className='hover:cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-500'>My Courses</button>
-          </div>}
-
-          {/* Dashboard Button */}
-          {userData?.role === "educator" ? <button className="px-4 py-2 border border-white rounded-md hover:bg-gray-700 transition sm:px-2 sm:py-1">
-            Dashboard
-          </button> : <></>}
-
-          {/* Logout Button */}
-          {userData ? <button
-            className="px-4 py-2 border border-white rounded-md hover:bg-red-800 transition sm:px-2 sm:py-1"
-            onClick={handleLogout}
+      {/* 🌌 Navbar */}
+      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-gradient-to-r from-gray-900/80 via-gray-800/60 to-gray-900/80 border-b border-gray-700/40 shadow-md">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+          {/* 🌱 Brand */}
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => navigate("/")}
           >
-            Logout
-          </button>
-            :
-            <button
-              className="px-4 py-2 border border-white rounded-md hover:bg-green-300 transition sm:px-2 sm:py-1"
-              onClick={handleLogin}
-            >
-              Login
-            </button>}
-        </div>
+            <img
+              src="/logo.png"
+              alt="GrowTogether Logo"
+              className="h-10 w-10 object-contain rounded-full border border-purple-400/30 shadow-sm"
+            />
+            <span className="text-xl font-semibold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hidden sm:block">
+              GrowTogether
+            </span>
+          </div>
 
-        <GiHamburgerMenu className='w-[30px] h-[30px] lg:hidden fill-white cursor-pointer' onClick={() => setShowHemOptions(prev => !prev)} />
+          {/* 💻 Desktop Menu */}
+          <div className="hidden lg:flex items-center gap-6">
+            {userData ? (
+              <>
+                {userData.role === "educator" && (
+                  <button
+                    onClick={() => navigate("/dashboard")}
+                    className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white hover:scale-105 transition-transform shadow-md"
+                  >
+                    Dashboard
+                  </button>
+                )}
+
+                {/* Profile Dropdown */}
+                <div className="relative">
+                  <div
+                    onClick={() => setShowProfileOptions((prev) => !prev)}
+                    className="w-11 h-11 rounded-full overflow-hidden border-2 border-purple-400/60 cursor-pointer hover:scale-105 transition-transform"
+                  >
+                    <img
+                      src={userData.imageUrl || "/src/assets/profile-icon.png"}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <AnimatePresence>
+                    {showProfileOptions && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.25 }}
+                        className="absolute right-0 mt-3 w-48 bg-gray-900/90 text-gray-100 rounded-xl shadow-lg border border-gray-700/40 backdrop-blur-lg overflow-hidden"
+                      >
+                        <button
+                          onClick={() => {
+                            navigate("/profile");
+                            setShowProfileOptions(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 hover:bg-purple-700/30"
+                        >
+                          My Profile
+                        </button>
+                        <button className="block w-full text-left px-4 py-2 hover:bg-purple-700/30">
+                          My Courses
+                        </button>
+                        <hr className="border-gray-700/50" />
+                        <button
+                          onClick={handleLogout}
+                          className="block w-full text-left px-4 py-2 hover:bg-red-600/30 text-red-400"
+                        >
+                          Logout
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate("/login")}
+                  className="px-5 py-2 rounded-full border border-purple-400/40 text-gray-100 hover:bg-purple-700/30 transition-all"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => navigate("/signup")}
+                  className="px-5 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full shadow-md hover:shadow-purple-600/40 hover:scale-105 transition-transform"
+                >
+                  Sign Up
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* 🍔 Mobile Hamburger */}
+          <div className="lg:hidden">
+            <GiHamburgerMenu
+              className="w-7 h-7 cursor-pointer text-purple-300 hover:text-white transition"
+              onClick={() => setShowMenu(true)}
+            />
+          </div>
+        </div>
       </nav>
 
-      <div className={`fixed top-0 w-[100%] h-[100vh] bg-[#9372b2f9] flex items-center justify-center flex-col gap-5 z-10 lg:hidden ${showHemOptions ? 'translate-x-[0] transition duration-600' : 'translate-x-[-100%] transition duration-600'}`}>
-        <RxCross1 className='w-[30px] h-[30px] lg:hidden fill-white cursor-pointer absolute top-5 right-[4%] bg-[white]' onClick={() => setShowHemOptions(prev => !prev)} />
-
-        {/* profile image option */}
-        {userData && (
-          <div className="flex items-center justify-center flex-col gap-3 ">
-            {/* Profile Image */}
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 shadow-sm">
-              <img
-                src={userData?.imageUrl || '/src/assets/profile-icon.png'}
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Profile Button */}
-            <button onClick={()=>navigate('/profile')} className="px-4 py-2 w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950  sm:px-2 sm:py-1">
-              Profile
+      {/* 📱 Mobile Menu (Animated) */}
+      <AnimatePresence>
+        {showMenu && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 90, damping: 20 }}
+            className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 flex flex-col items-center justify-center gap-6 text-white z-[999] backdrop-blur-xl"
+          >
+            {/* ❌ Close Button */}
+            <button
+              onClick={() => setShowMenu(false)}
+              className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+              aria-label="Close menu"
+            >
+              <RxCross1 className="w-6 h-6" />
             </button>
 
-             {/* dashboard for educators */}
-            {userData?.role === "educator" ? <button className="px-4 py-2  w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950 sm:px-2 sm:py-1">
-              Dashboard
-            </button> : <></>}
+            {/* 🌈 Menu Content */}
+            {userData ? (
+              <>
+                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-purple-400 shadow-xl">
+                  <img
+                    src={userData.imageUrl || "/src/assets/profile-icon.png"}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-            {/* My courses Button */}
-            <button className="px-4 py-2 w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950  sm:px-2 sm:py-1">
-              My courses
-            </button>
-            
-            {/* logout button */}
-            <button className="px-4 py-2 w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950  sm:px-2 sm:py-1" onClick={handleLogout}>
-              Logout
-            </button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => {
+                    navigate("/profile");
+                    setShowMenu(false);
+                  }}
+                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                >
+                  My Profile
+                </motion.button>
 
-          </div>
+                {userData.role === "educator" && (
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => {
+                      navigate("/dashboard");
+                      setShowMenu(false);
+                    }}
+                    className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                  >
+                    Dashboard
+                  </motion.button>
+                )}
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                >
+                  My Courses
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  onClick={handleLogout}
+                  className="w-64 py-3 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white shadow-md"
+                >
+                  Logout
+                </motion.button>
+              </>
+            ) : (
+              <>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => {
+                    navigate("/login");
+                    setShowMenu(false);
+                  }}
+                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                >
+                  Login
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => {
+                    navigate("/signup");
+                    setShowMenu(false);
+                  }}
+                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-pink-600 text-white shadow-md"
+                >
+                  Sign Up
+                </motion.button>
+              </>
+            )}
+          </motion.div>
         )}
-
-        {/* if no user is logged in */}
-        {!userData && (
-          <div className="flex items-center justify-center flex-col gap-3 ">
-            
-
-            {/* Login Button */}
-            <button className="px-4 py-2 w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950  sm:px-2 sm:py-1" onClick={()=>navigate('/login')}>
-              Login
-            </button>
-
-            {/* sign up Button */}
-            <button className="px-4 py-2 w-[250px] h-[40px] cursor-pointer text-white hover:bg-fuchsia-950  sm:px-2 sm:py-1" onClick={()=>navigate('/signup')}>
-              Sign Up
-            </button>
-
-            
-          </div>
-        )}
-
-      </div>
-
+      </AnimatePresence>
     </>
   );
 }
 
-export default Navbar
+export default Navbar;
