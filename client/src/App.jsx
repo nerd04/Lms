@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import Profile from './pages/Profile'
 
 
-export const serverUrl = "https://lms-ruby-one.vercel.app/"
+export const serverUrl = "http://localhost:3000"
 
 function App() {
 
