@@ -11,10 +11,7 @@ const app = express();
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({
-    origin: "https://lms-uby5.vercel.app/",
-    credentials: true
-}))
+app.use(cors())
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
@@ -24,7 +21,18 @@ app.get('/', (req, res)=>{
     
 })
 
-app.listen(process.env.FRONTEND_URL, (req, res)=>{
-    connectDB();
-    console.log("Server started listening on ",process.env.FRONTEND_URL);
+let isconnected = false;
+
+app.use((req, res, next)=>{
+    if(!isconnected){
+        connectDB()
+        isconnected = true;
+    } 
+    next();
 })
+
+// app.listen(process.env.FRONTEND_URL, (req, res)=>{
+//     console.log("Server started listening on ",process.env.FRONTEND_URL);
+// })
+
+module.exports = app;
