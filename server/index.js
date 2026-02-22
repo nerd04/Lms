@@ -11,7 +11,20 @@ const app = express();
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}))
+
+// let isConnected = false;
+
+// app.use(async (req, res, next)=>{
+//     if(!isConnected){
+//         await connectDB();
+//         isConnected = true;
+//     }
+//     next();
+// })
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
@@ -21,18 +34,9 @@ app.get('/', (req, res)=>{
     
 })
 
-let isconnected = false;
-
-app.use((req, res, next)=>{
-    if(!isconnected){
-        connectDB()
-        isconnected = true;
-    } 
-    next();
+app.listen(process.env.PORT, (req, res)=>{
+    connectDB();
+    console.log("Server started listening on ",process.env.PORT);
 })
 
-// app.listen(process.env.FRONTEND_URL, (req, res)=>{
-//     console.log("Server started listening on ",process.env.FRONTEND_URL);
-// })
-
-module.exports = app;
+// module.exports = app;
