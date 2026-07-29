@@ -150,7 +150,7 @@ function Login() {
             className="w-full max-w-sm flex items-center justify-center gap-3 py-2.5 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition"
           >
             <img src={google} alt="Google" className="w-5" />
-            <span className="text-white text-sm font-medium">Sign in with oogle</span>
+            <span className="text-white text-sm font-medium">Sign in with Google</span>
           </button>
 
           {/* Signup */}

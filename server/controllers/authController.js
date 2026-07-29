@@ -32,9 +32,9 @@ export const signUp = async(req, res)=>{
 
         const token = await generateToken(user._id);
         res.cookie("token", token, {
-            httpOnly:true,
-            secure: true,
-            sameSize: "none",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 7*24*60*60*1000
         })
 
@@ -59,9 +59,9 @@ export const logIn = async(req, res)=>{
 
         let token = await generateToken(user._id);
         res.cookie("token", token, {
-            httpOnly:true,
-            secure: true,
-            sameSize: "none",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 7*24*60*60*1000
         })
 
@@ -150,17 +150,16 @@ export const resetPassword = async(req, res)=>{
 
 export const googleAuth = async(req, res)=>{
     try {
-        const {name, email} = req.body;
-        const user = await User.findOne({email});
+        const {name, email, role} = req.body;
+        let user = await User.findOne({email});
         if(!user){
-            const role = req.body;
-            user = await User.create({name,email,role});
+            user = await User.create({name, email, role: role || "student"});
         }
         const token = await generateToken(user._id);
         res.cookie("token", token, {
-            httpOnly:true,
-            secure: true,
-            sameSize: "none",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 7*24*60*60*1000
         })
         return res.status(200).json(user);

@@ -22,3 +22,19 @@ export const authUser = (req, res, next) => {
     return res.status(403).json({ message: "Invalid or expired token" });
   }
 };
+
+export const optionalAuth = (req, res, next) => {
+  try {
+    const { token } = req.cookies;
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      if (decoded) {
+        req.userId = decoded.userId;
+      }
+    }
+  } catch (error) {
+    console.log("Optional auth failed:", error.message);
+  }
+  next();
+};
+

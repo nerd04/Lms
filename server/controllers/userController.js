@@ -22,12 +22,21 @@ export const updateProfile = async (req, res)=>{
         if(req.file){
             imageUrl = await uploadOnCloudinary(req.file.path);
         }
-        const user = await User.findByIdAndUpdate(userId, {name, imageUrl})
+
+        const updateFields = { name };
+        if (imageUrl) {
+            updateFields.imageUrl = imageUrl;
+        }
+
+        const user = await User.findByIdAndUpdate(
+            userId, 
+            updateFields, 
+            { new: true }
+        ).select("-password");
 
         if(!user){
             return res.status(404).json({message: "user not found"})
         }
-        await user.save()
         return res.status(200).json(user)
     } catch (error) {
         return res.status(500).json({message: `profile update error: ${error}`})

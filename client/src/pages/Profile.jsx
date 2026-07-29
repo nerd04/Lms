@@ -203,7 +203,7 @@ function ProfileCard({ userData, onEdit }) {
               Enrolled Courses
             </p>
             <p className="text-2xl font-bold text-white mt-1">
-              {userData.enrolledCourses || "0"}
+              {userData.enrolledCourses?.length || "0"}
             </p>
           </div>
         </div>
@@ -256,12 +256,13 @@ export default function Profile() {
         <AnimatePresence mode="wait">
           {mode === "view" ? (
             <>
-              <div
-                className="absolute cursor-pointer z-10 bg-white  hover:scale-150 transition-transform"
+              <button
+                className="absolute top-6 left-6 cursor-pointer z-10 p-3 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg backdrop-blur-md"
                 onClick={() => navigate("/")}
+                aria-label="Back to home"
               >
-                <IoArrowBack />
-              </div>
+                <IoArrowBack className="text-xl" />
+              </button>
               <ProfileCard
                 key="view"
                 userData={userData}
@@ -270,12 +271,13 @@ export default function Profile() {
             </>
           ) : (
             <>
-              <div
-                className="absolute cursor-pointer z-10 bg-white  hover:scale-150 transition-transform"
+              <button
+                className="absolute top-6 left-6 cursor-pointer z-10 p-3 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg backdrop-blur-md"
                 onClick={() => navigate("/")}
+                aria-label="Back to home"
               >
-                <IoArrowBack />
-              </div>
+                <IoArrowBack className="text-xl" />
+              </button>
               <EditProfile
                 key="edit"
                 userData={userData}

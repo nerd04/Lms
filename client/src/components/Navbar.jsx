@@ -93,7 +93,13 @@ function Navbar() {
                         >
                           My Profile
                         </button>
-                        <button className="block w-full text-left px-4 py-2 hover:bg-purple-700/30">
+                        <button
+                          onClick={() => {
+                            navigate("/my-courses");
+                            setShowProfileOptions(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 hover:bg-purple-700/30"
+                        >
                           My Courses
                         </button>
                         <hr className="border-gray-700/50" />
@@ -192,6 +198,10 @@ function Navbar() {
 
                 <motion.button
                   whileHover={{ scale: 1.05 }}
+                  onClick={() => {
+                    navigate("/my-courses");
+                    setShowMenu(false);
+                  }}
                   className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
                 >
                   My Courses

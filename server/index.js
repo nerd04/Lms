@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import courseRouter from './routes/courseRoutes.js';
 dotenv.config()
 
 const app = express();
@@ -16,27 +17,31 @@ app.use(cors({
     credentials: true,
 }))
 
-// let isConnected = false;
+let isConnected = false;
 
-// app.use(async (req, res, next)=>{
-//     if(!isConnected){
-//         await connectDB();
-//         isConnected = true;
-//     }
-//     next();
-// })
+app.use(async (req, res, next)=>{
+    if(!isConnected){
+        await connectDB();
+        isConnected = true;
+    }
+    next();
+})
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
+app.use("/api/courses", courseRouter)
 
 app.get('/', (req, res)=>{
-    res.send("Hello from server")
-    
+    res.send("Hello from WeLearn server")
 })
 
-app.listen(process.env.PORT, (req, res)=>{
-    connectDB();
-    console.log("Server started listening on ",process.env.PORT);
-})
+if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Server started listening on port ${port}`);
+    });
+}
+
+export default app;
 
 // module.exports = app;
