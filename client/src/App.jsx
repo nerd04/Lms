@@ -13,9 +13,11 @@ import getCurrentUser from './customHooks/getCurrentUser'
 import { useSelector } from 'react-redux'
 import Profile from './pages/Profile'
 
-export const serverUrl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+const rawUrl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
   ? "http://localhost:3000"
   : (import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL || "http://localhost:3000");
+
+export const serverUrl = rawUrl.endsWith("/") ? rawUrl.slice(0, -1) : rawUrl;
 
 function App() {
   getCurrentUser();
