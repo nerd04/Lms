@@ -13,10 +13,14 @@ const app = express();
 app.use(express.json())
 app.use(cookieParser())
 
+const frontendUrl = process.env.FRONTEND_URL
+  ? (process.env.FRONTEND_URL.endsWith("/") ? process.env.FRONTEND_URL.slice(0, -1) : process.env.FRONTEND_URL)
+  : null;
+
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  process.env.FRONTEND_URL
+  frontendUrl
 ].filter(Boolean);
 
 app.use(cors({
