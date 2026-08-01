@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { MdEmail } from "react-icons/md";
 import {
   FaUserGraduate,
@@ -20,13 +20,13 @@ import { IoArrowBack } from "react-icons/io5";
 // 🧿 Read-only Avatar
 function ReadOnlyAvatar({ src, name }) {
   return (
-    <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-purple-400 shadow-lg shadow-purple-400/20">
+    <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-indigo-100 shadow-sm">
       <img
         src={src}
         alt={`${name}'s avatar`}
         className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/10 to-transparent"></div>
     </div>
   );
 }
@@ -54,15 +54,13 @@ function EditProfile({ userData, handleEditSave, onCancel, Loading }) {
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gray-900/80 backdrop-blur-xl rounded-3xl border border-purple-500/30 shadow-2xl w-full max-w-3xl p-6 sm:p-10 text-white relative overflow-hidden"
+      className="bg-white rounded-3xl border border-[#e8e6df] shadow-sm w-full max-w-3xl p-6 sm:p-10 text-zinc-800 relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20 opacity-50"></div>
-
-      <form onSubmit={handleChange} className="relative z-10">
+      <form onSubmit={handleChange} className="relative z-10 space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           {/* Avatar */}
           <div className="flex flex-col sm:flex-row items-center gap-6">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-purple-400 shadow-lg shadow-purple-400/30">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-indigo-100 shadow-sm">
               <img
                 src={userData.imageUrl}
                 alt="preview avatar"
@@ -71,14 +69,14 @@ function EditProfile({ userData, handleEditSave, onCancel, Loading }) {
             </div>
 
             <div className="flex flex-col">
-              <label className="text-sm text-purple-300">Profile Photo</label>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Profile Photo</label>
               <div className="mt-2 flex flex-wrap gap-2 items-center">
                 <button
                   type="button"
                   onClick={handleUploadClick}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:scale-105 transition-transform"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-sm transition cursor-pointer text-sm"
                 >
-                  <FaCamera /> Upload
+                  <FaCamera /> Upload Photo
                 </button>
                 <input
                   type="file"
@@ -94,14 +92,14 @@ function EditProfile({ userData, handleEditSave, onCancel, Loading }) {
           <div className="flex gap-2">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold hover:scale-105 transition-transform"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-sm transition cursor-pointer text-sm"
             >
               <FaSave /> {Loading ? "Saving..." : "Save"}
             </button>
             <button
               type="button"
               onClick={onCancel}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 text-gray-300 hover:bg-white/20 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 font-semibold shadow-sm transition cursor-pointer text-sm"
             >
               <FaTimes /> Cancel
             </button>
@@ -109,32 +107,32 @@ function EditProfile({ userData, handleEditSave, onCancel, Loading }) {
         </div>
 
         {/* Fields */}
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
           <div>
-            <label className="text-sm text-purple-300">Full Name</label>
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">Full Name</label>
             <input
               ref={newName}
               defaultValue={userData.name}
-              className="mt-2 w-full rounded-xl px-4 py-2 bg-gray-800/50 border border-purple-400/30 text-white focus:ring-2 focus:ring-purple-500 outline-none"
+              className="w-full rounded-xl px-4 py-3 bg-white border border-zinc-200 text-zinc-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none font-medium text-sm"
             />
           </div>
 
           <div>
-            <label className="text-sm text-purple-300">Email</label>
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">Email (Read Only)</label>
             <input
               ref={newEmail}
               defaultValue={userData.email}
               disabled
-              className="mt-2 w-full rounded-xl px-4 py-2 bg-gray-800/50 border border-purple-400/30 text-gray-400 outline-none"
+              className="w-full rounded-xl px-4 py-3 bg-zinc-50 border border-zinc-150 text-zinc-400 outline-none font-medium text-sm"
             />
           </div>
 
           <div>
-            <label className="text-sm text-purple-300">Role</label>
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">Account Role</label>
             <select
               ref={newRole}
               defaultValue={userData.role}
-              className="mt-2 w-full rounded-xl px-4 py-2 bg-gray-800/50 border border-purple-400/30 text-white focus:ring-2 focus:ring-purple-500 outline-none"
+              className="w-full rounded-xl px-4 py-3 bg-white border border-zinc-200 text-zinc-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none font-medium text-sm cursor-pointer"
             >
               <option value="student">Student</option>
               <option value="educator">Educator</option>
@@ -143,13 +141,13 @@ function EditProfile({ userData, handleEditSave, onCancel, Loading }) {
         </div>
 
         {/* Drag & Drop Info */}
-        <div className="mt-6 rounded-xl border-2 border-dashed border-purple-400/30 p-6 text-center">
-          <p className="text-sm text-purple-200">
+        <div className="rounded-xl border-2 border-dashed border-zinc-200 p-6 text-center">
+          <p className="text-sm text-zinc-500 font-medium">
             Drag & drop an image here, or{" "}
             <button
               type="button"
               onClick={handleUploadClick}
-              className="text-purple-400 underline"
+              className="text-indigo-650 font-bold underline cursor-pointer hover:text-indigo-750"
             >
               browse
             </button>
@@ -165,44 +163,42 @@ function ProfileCard({ userData, onEdit }) {
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gray-900/80 backdrop-blur-xl rounded-3xl border border-purple-500/30 shadow-2xl w-full max-w-3xl p-8 sm:p-10 text-white relative overflow-hidden"
+      className="bg-white rounded-3xl border border-[#e8e6df] shadow-sm w-full max-w-3xl p-8 sm:p-10 text-zinc-850 relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-gray-900/40 to-blue-900/30 opacity-60"></div>
-
       <div className="relative flex flex-col items-center text-center gap-6 z-10">
         {/* Avatar */}
         <ReadOnlyAvatar src={userData.imageUrl} name={userData.name} />
 
         {/* User Info */}
         <div className="w-full flex flex-col items-center gap-3">
-          <h1 className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-extrabold text-zinc-800 tracking-tight">
             {userData.name}
           </h1>
 
           <div className="flex flex-col items-center gap-3">
             <span
-              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium ${
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold ${
                 userData.role === "educator"
-                  ? "bg-orange-400/20 text-orange-300 border border-orange-400/30"
-                  : "bg-blue-400/20 text-blue-300 border border-blue-400/30"
+                  ? "bg-amber-50 text-amber-700 border border-amber-200/60"
+                  : "bg-indigo-50 text-indigo-700 border border-indigo-200/60"
               }`}
             >
               {userData.role === "educator" ? <GiTeacher /> : <FaUserGraduate />}
               <span className="capitalize">{userData.role}</span>
             </span>
 
-            <span className="inline-flex items-center gap-2 text-gray-300 text-sm">
-              <MdEmail className="text-lg text-purple-300" />
+            <span className="inline-flex items-center gap-2 text-zinc-600 text-sm font-medium">
+              <MdEmail className="text-lg text-indigo-600" />
               <span className="break-all">{userData.email}</span>
             </span>
           </div>
 
           {/* Enrolled Info */}
-          <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 rounded-2xl px-6 py-4 text-center border border-purple-500/30 w-40 sm:w-56 mt-4">
-            <p className="text-purple-300 text-sm font-medium tracking-wide">
+          <div className="bg-zinc-50 rounded-2xl px-6 py-4 text-center border border-zinc-150 w-40 sm:w-56 mt-4 shadow-inner">
+            <p className="text-zinc-500 text-xs font-bold uppercase tracking-wider">
               Enrolled Courses
             </p>
-            <p className="text-2xl font-bold text-white mt-1">
+            <p className="text-3xl font-black text-indigo-650 mt-1">
               {userData.enrolledCourses?.length || "0"}
             </p>
           </div>
@@ -211,7 +207,7 @@ function ProfileCard({ userData, onEdit }) {
         {/* Edit Button */}
         <button
           onClick={onEdit}
-          className="mt-6 inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md hover:scale-105 transition-transform"
+          className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition cursor-pointer text-sm"
         >
           <FaUserEdit /> Edit Profile
         </button>
@@ -219,7 +215,6 @@ function ProfileCard({ userData, onEdit }) {
     </motion.section>
   );
 }
-
 
 // 🌈 Main Component
 export default function Profile() {
@@ -251,41 +246,47 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-purple-950 to-blue-950 flex items-start justify-center px-4 py-14">
-      <div className="w-full max-w-4xl space-y-6">
+    <div className="min-h-screen bg-[#faf9f5] flex items-center justify-center px-4 py-24 relative overflow-hidden">
+      {/* Decorative blobs */}
+      <div className="absolute top-20 right-10 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl opacity-40"></div>
+      <div className="absolute bottom-20 left-10 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl opacity-40"></div>
+
+      <div className="w-full max-w-4xl space-y-6 relative z-10 flex flex-col items-center">
         <AnimatePresence mode="wait">
           {mode === "view" ? (
-            <>
+            <React.Fragment key="view">
               <button
-                className="absolute top-6 left-6 cursor-pointer z-10 p-3 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg backdrop-blur-md"
+                className="absolute top-6 left-6 sm:left-0 cursor-pointer z-10 p-3 rounded-full bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition shadow-sm"
                 onClick={() => navigate("/")}
                 aria-label="Back to home"
               >
                 <IoArrowBack className="text-xl" />
               </button>
-              <ProfileCard
-                key="view"
-                userData={userData}
-                onEdit={() => setMode("edit")}
-              />
-            </>
+              <div className="w-full flex justify-center mt-12 sm:mt-0">
+                <ProfileCard
+                  userData={userData}
+                  onEdit={() => setMode("edit")}
+                />
+              </div>
+            </React.Fragment>
           ) : (
-            <>
+            <React.Fragment key="edit">
               <button
-                className="absolute top-6 left-6 cursor-pointer z-10 p-3 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg backdrop-blur-md"
+                className="absolute top-6 left-6 sm:left-0 cursor-pointer z-10 p-3 rounded-full bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition shadow-sm"
                 onClick={() => navigate("/")}
                 aria-label="Back to home"
               >
                 <IoArrowBack className="text-xl" />
               </button>
-              <EditProfile
-                key="edit"
-                userData={userData}
-                handleEditSave={handleEditSave}
-                onCancel={() => setMode("view")}
-                Loading={Loading}
-              />
-            </>
+              <div className="w-full flex justify-center mt-12 sm:mt-0">
+                <EditProfile
+                  userData={userData}
+                  handleEditSave={handleEditSave}
+                  onCancel={() => setMode("view")}
+                  Loading={Loading}
+                />
+              </div>
+            </React.Fragment>
           )}
         </AnimatePresence>
       </div>

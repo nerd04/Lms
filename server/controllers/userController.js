@@ -17,13 +17,17 @@ export const getCurrentUser = async (req, res) =>{
 export const updateProfile = async (req, res)=>{
     try {
         const userId = req.userId
-        const {name} = req.body;
+        const {name, role} = req.body;
         let imageUrl;
         if(req.file){
             imageUrl = await uploadOnCloudinary(req.file.path);
         }
 
-        const updateFields = { name };
+        const updateFields = {};
+        if (name) updateFields.name = name;
+        if (role && ["student", "educator"].includes(role)) {
+            updateFields.role = role;
+        }
         if (imageUrl) {
             updateFields.imageUrl = imageUrl;
         }

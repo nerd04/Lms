@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { serverUrl } from "../App";
 import { toast } from "react-toastify";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion as motionFramer, AnimatePresence as AnimatePresenceFramer } from "framer-motion";
 import {
   FaPlus,
   FaTrash,
@@ -14,8 +14,6 @@ import {
   FaTimes,
   FaArrowLeft,
   FaUpload,
-  FaEye,
-  FaPlay,
 } from "react-icons/fa";
 
 function Dashboard() {
@@ -203,10 +201,10 @@ function Dashboard() {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white px-6 pt-28 pb-20 relative overflow-hidden">
-        {/* Background blobs */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+      <div className="min-h-screen bg-[#faf9f5] text-zinc-800 px-6 pt-32 pb-20 relative overflow-hidden">
+        {/* Soft Background blobs */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl opacity-40"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl opacity-40"></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           
@@ -214,7 +212,7 @@ function Dashboard() {
             /* ========================================================================= */
             /* 🎥 LECTURES MANAGEMENT CONTAINER                                          */
             /* ========================================================================= */
-            <motion.div
+            <motionFramer.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               className="space-y-6"
@@ -222,18 +220,18 @@ function Dashboard() {
               {/* Back link */}
               <button
                 onClick={() => setActiveCourseForLectures(null)}
-                className="flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors font-semibold"
+                className="flex items-center gap-2 text-indigo-650 hover:text-indigo-750 transition-colors font-semibold cursor-pointer"
               >
                 <FaArrowLeft /> Back to Dashboard
               </button>
 
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
                 <div>
-                  <h1 className="text-3xl font-extrabold text-white">
+                  <h1 className="text-3xl font-extrabold text-zinc-800 tracking-tight">
                     Manage Curriculum
                   </h1>
-                  <p className="text-gray-400 mt-1">
-                    Course: <span className="text-purple-400 font-semibold">{activeCourseForLectures.title}</span>
+                  <p className="text-zinc-500 mt-1 font-semibold text-sm">
+                    Course: <span className="text-indigo-600 font-extrabold">{activeCourseForLectures.title}</span>
                   </p>
                 </div>
               </div>
@@ -241,43 +239,43 @@ function Dashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 {/* Left Panel: Lectures List */}
-                <div className="lg:col-span-2 bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
-                  <h2 className="text-xl font-bold mb-6 text-gray-200 flex items-center gap-2">
-                    <FaBookOpen className="text-purple-400" /> Current Lectures ({activeCourseForLectures.lectures?.length || 0})
+                <div className="lg:col-span-2 bg-white border border-[#e8e6df] rounded-3xl p-6 shadow-sm">
+                  <h2 className="text-xl font-bold mb-6 text-zinc-800 flex items-center gap-2">
+                    <FaBookOpen className="text-indigo-600" /> Current Lectures ({activeCourseForLectures.lectures?.length || 0})
                   </h2>
 
                   {(!activeCourseForLectures.lectures || activeCourseForLectures.lectures.length === 0) ? (
-                    <div className="text-center py-20 text-gray-500">
-                      <FaVideo className="text-5xl mx-auto mb-4" />
-                      <p>No lectures uploaded for this course yet.</p>
+                    <div className="text-center py-20 text-zinc-400">
+                      <FaVideo className="text-5xl mx-auto mb-4 text-zinc-300" />
+                      <p className="font-semibold">No lectures uploaded for this course yet.</p>
                     </div>
                   ) : (
                     <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                       {activeCourseForLectures.lectures.map((lecture, index) => (
                         <div
                           key={lecture._id}
-                          className="flex items-center justify-between p-4 bg-white/5 border border-white/5 hover:border-white/10 rounded-2xl transition"
+                          className="flex items-center justify-between p-4 bg-zinc-50 border border-zinc-150 hover:border-zinc-300 rounded-2xl transition"
                         >
                           <div className="flex items-center gap-4">
-                            <span className="w-8 h-8 rounded-full bg-purple-700/30 border border-purple-500/30 flex items-center justify-center font-bold text-sm">
+                            <span className="w-8 h-8 rounded-full bg-indigo-50 border border-indigo-200 flex items-center justify-center font-bold text-sm text-indigo-700">
                               {index + 1}
                             </span>
                             <div>
-                              <h4 className="font-bold text-white flex items-center gap-2">
+                              <h4 className="font-bold text-zinc-800 flex items-center gap-2">
                                 {lecture.title}
                                 {lecture.isFreePreview && (
-                                  <span className="px-2 py-0.5 text-[10px] font-semibold bg-green-500/20 text-green-300 border border-green-500/30 rounded">
+                                  <span className="px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/50 rounded">
                                     Free Preview
                                   </span>
                                 )}
                               </h4>
-                              <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{lecture.description}</p>
+                              <p className="text-xs text-zinc-500 font-semibold mt-0.5 line-clamp-1">{lecture.description}</p>
                             </div>
                           </div>
 
                           <button
                             onClick={() => handleDeleteLecture(lecture._id)}
-                            className="p-2.5 rounded-xl bg-red-600/10 hover:bg-red-600/30 border border-red-500/20 text-red-400 hover:text-red-300 transition"
+                            className="p-2.5 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 transition cursor-pointer"
                             title="Delete Lecture"
                           >
                             <FaTrash />
@@ -289,34 +287,34 @@ function Dashboard() {
                 </div>
 
                 {/* Right Panel: Add Lecture Form */}
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
-                  <h2 className="text-xl font-bold mb-6 text-gray-200 flex items-center gap-2">
-                    <FaPlus className="text-purple-400" /> Add Lecture
+                <div className="bg-white border border-[#e8e6df] rounded-3xl p-6 shadow-sm">
+                  <h2 className="text-xl font-bold mb-6 text-zinc-800 flex items-center gap-2">
+                    <FaPlus className="text-indigo-600" /> Add Lecture
                   </h2>
 
                   <form onSubmit={handleAddLecture} className="space-y-5">
                     <div>
-                      <label className="text-xs font-bold text-purple-300 uppercase tracking-wider block mb-2">
+                      <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">
                         Lecture Title
                       </label>
                       <input
                         ref={lectureTitle}
                         type="text"
                         placeholder="e.g. 1. Introduction to Variables"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500 outline-none"
+                        className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-zinc-800 font-medium"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-purple-300 uppercase tracking-wider block mb-2">
+                      <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">
                         Description
                       </label>
                       <textarea
                         ref={lectureDesc}
                         rows={3}
                         placeholder="Provide details on what this lecture covers..."
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-purple-500 outline-none"
+                        className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-zinc-800 font-medium"
                       />
                     </div>
 
@@ -327,32 +325,32 @@ function Dashboard() {
                         id="isFreePreview"
                         checked={lectureFreePreview}
                         onChange={(e) => setLectureFreePreview(e.target.checked)}
-                        className="w-4.5 h-4.5 text-purple-600 bg-white/5 border-white/10 rounded focus:ring-purple-500"
+                        className="w-4.5 h-4.5 text-indigo-650 bg-white border-zinc-200 rounded focus:ring-indigo-500 cursor-pointer"
                       />
-                      <label htmlFor="isFreePreview" className="text-sm font-semibold text-gray-300 cursor-pointer">
+                      <label htmlFor="isFreePreview" className="text-sm font-semibold text-zinc-700 cursor-pointer select-none">
                         Allow Free Preview (Guest Viewing)
                       </label>
                     </div>
 
                     {/* Video File Upload */}
                     <div>
-                      <label className="text-xs font-bold text-purple-300 uppercase tracking-wider block mb-2">
+                      <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">
                         Lecture Video File
                       </label>
-                      <div className="border-2 border-dashed border-white/10 hover:border-purple-500/40 rounded-2xl p-4 text-center cursor-pointer relative group transition-colors">
+                      <div className="border-2 border-dashed border-zinc-200 hover:border-indigo-500/40 rounded-2xl p-4 text-center cursor-pointer relative group transition-colors">
                         <input
                           type="file"
                           accept="video/*"
                           onChange={(e) => setLectureVideo(e.target.files[0])}
                           className="absolute inset-0 opacity-0 cursor-pointer"
                         />
-                        <FaUpload className="text-3xl text-purple-400 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+                        <FaUpload className="text-3xl text-indigo-500 mx-auto mb-2 group-hover:scale-105 transition-transform" />
                         {lectureVideo ? (
-                          <span className="text-sm font-semibold text-green-400 block truncate">
+                          <span className="text-sm font-bold text-emerald-600 block truncate">
                             Selected: {lectureVideo.name}
                           </span>
                         ) : (
-                          <span className="text-xs text-gray-400 block">
+                          <span className="text-xs text-zinc-400 font-semibold block">
                             Click to select MP4/MOV file
                           </span>
                         )}
@@ -362,7 +360,7 @@ function Dashboard() {
                     <button
                       type="submit"
                       disabled={addLectureLoading}
-                      className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-xl shadow-md hover:scale-[1.02] transition"
+                      className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition-colors cursor-pointer text-sm"
                     >
                       {addLectureLoading ? "Uploading Video..." : "Upload & Save Lecture"}
                     </button>
@@ -371,7 +369,7 @@ function Dashboard() {
 
               </div>
 
-            </motion.div>
+            </motionFramer.div>
           ) : (
             /* ========================================================================= */
             /* 📊 MAIN DASHBOARD CONTAINER                                               */
@@ -381,17 +379,17 @@ function Dashboard() {
               {/* Header */}
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                  <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  <h1 className="text-4xl font-extrabold text-zinc-800 tracking-tight">
                     Educator Command Center
                   </h1>
-                  <p className="text-gray-400 mt-1">
+                  <p className="text-zinc-500 mt-1 font-semibold text-base">
                     Manage your curriculum, track student enrollment, and share knowledge.
                   </p>
                 </div>
 
                 <button
                   onClick={() => setShowCreateModal(true)}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-full shadow-lg shadow-purple-600/30 hover:scale-105 transition-transform"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-full shadow-md shadow-indigo-600/10 hover:scale-105 active:scale-95 transition cursor-pointer text-sm"
                 >
                   <FaPlus /> Create Course
                 </button>
@@ -400,33 +398,33 @@ function Dashboard() {
               {/* Stats Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex items-center gap-4 backdrop-blur-md">
-                  <div className="p-4 bg-purple-700/20 text-purple-400 rounded-2xl border border-purple-500/20">
+                <div className="bg-white border border-[#e8e6df] rounded-3xl p-6 flex items-center gap-4 shadow-sm">
+                  <div className="p-4 bg-indigo-50 text-indigo-600 rounded-2xl border border-indigo-100">
                     <FaBookOpen className="text-2xl" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Total Courses</p>
-                    <h3 className="text-3xl font-extrabold text-white mt-1">{stats.totalCourses}</h3>
+                    <p className="text-xs text-zinc-400 uppercase tracking-wider font-bold">Total Courses</p>
+                    <h3 className="text-3xl font-extrabold text-zinc-800 mt-1">{stats.totalCourses}</h3>
                   </div>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex items-center gap-4 backdrop-blur-md">
-                  <div className="p-4 bg-blue-700/20 text-blue-400 rounded-2xl border border-blue-500/20">
+                <div className="bg-white border border-[#e8e6df] rounded-3xl p-6 flex items-center gap-4 shadow-sm">
+                  <div className="p-4 bg-amber-50 text-amber-600 rounded-2xl border border-amber-100">
                     <FaUsers className="text-2xl" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Total Students</p>
-                    <h3 className="text-3xl font-extrabold text-white mt-1">{stats.totalStudents}</h3>
+                    <p className="text-xs text-zinc-400 uppercase tracking-wider font-bold">Total Students</p>
+                    <h3 className="text-3xl font-extrabold text-zinc-800 mt-1">{stats.totalStudents}</h3>
                   </div>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex items-center gap-4 backdrop-blur-md">
-                  <div className="p-4 bg-pink-700/20 text-pink-400 rounded-2xl border border-pink-500/20">
+                <div className="bg-white border border-[#e8e6df] rounded-3xl p-6 flex items-center gap-4 shadow-sm">
+                  <div className="p-4 bg-pink-50 text-pink-600 rounded-2xl border border-pink-100">
                     <FaChartLine className="text-2xl" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Projected Income</p>
-                    <h3 className="text-3xl font-extrabold text-white mt-1">Active</h3>
+                    <p className="text-xs text-zinc-400 uppercase tracking-wider font-bold">Projected Income</p>
+                    <h3 className="text-3xl font-extrabold text-zinc-800 mt-1">Active</h3>
                   </div>
                 </div>
 
@@ -434,22 +432,22 @@ function Dashboard() {
 
               {/* Courses Table/Grid */}
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-200">
+                <h2 className="text-2xl font-bold text-zinc-800 tracking-tight">
                   Your Courses
                 </h2>
 
                 {loading ? (
                   <div className="flex justify-center items-center py-20">
-                    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-purple-400"></div>
+                    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-indigo-600"></div>
                   </div>
                 ) : courses.length === 0 ? (
-                  <div className="text-center py-20 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-md">
-                    <FaBookOpen className="text-4xl text-gray-500 mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-gray-300">No courses created yet</h3>
-                    <p className="text-gray-400 mt-2">Get started by creating your first course catalog</p>
+                  <div className="text-center py-20 bg-white border border-[#e8e6df] rounded-3xl shadow-sm">
+                    <FaBookOpen className="text-4xl text-zinc-300 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-zinc-700">No courses created yet</h3>
+                    <p className="text-zinc-500 mt-2 font-medium">Get started by creating your first course catalog</p>
                     <button
                       onClick={() => setShowCreateModal(true)}
-                      className="mt-6 px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full font-semibold"
+                      className="mt-6 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-semibold transition shadow-sm cursor-pointer"
                     >
                       Create Course
                     </button>
@@ -459,7 +457,7 @@ function Dashboard() {
                     {courses.map((course) => (
                       <div
                         key={course._id}
-                        className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden flex flex-col justify-between backdrop-blur-md"
+                        className="bg-white border border-[#e8e6df] rounded-3xl overflow-hidden flex flex-col justify-between shadow-sm"
                       >
                         <div className="h-40 overflow-hidden relative">
                           <img
@@ -468,10 +466,10 @@ function Dashboard() {
                             className="w-full h-full object-cover"
                           />
                           <div className="absolute top-4 right-4 flex gap-2">
-                            <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${
+                            <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
                               course.isPublished
-                                ? "bg-green-500/20 text-green-300 border-green-500/30"
-                                : "bg-orange-500/20 text-orange-300 border-orange-500/30"
+                                ? "bg-emerald-50 text-emerald-700 border-emerald-250"
+                                : "bg-amber-50 text-amber-700 border-amber-250"
                             }`}>
                               {course.isPublished ? "Published" : "Draft"}
                             </span>
@@ -480,31 +478,31 @@ function Dashboard() {
 
                         <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                           <div>
-                            <h3 className="text-xl font-bold truncate">{course.title}</h3>
-                            <p className="text-xs text-gray-400 mt-1 line-clamp-2">{course.description}</p>
+                            <h3 className="text-lg font-bold truncate text-zinc-800">{course.title}</h3>
+                            <p className="text-xs text-zinc-500 font-semibold mt-1 line-clamp-2">{course.description}</p>
                           </div>
 
-                          <div className="flex justify-between items-center text-xs text-gray-400">
+                          <div className="flex justify-between items-center text-xs text-zinc-400 font-bold">
                             <span>{course.lectures?.length || 0} Lectures</span>
                             <span>{course.enrolledStudents?.length || 0} Students</span>
                           </div>
 
-                          <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2">
+                          <div className="pt-4 border-t border-zinc-100 flex flex-wrap gap-2">
                             <button
                               onClick={() => setActiveCourseForLectures(course)}
-                              className="flex-1 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs transition"
+                              className="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition cursor-pointer"
                             >
                               Curriculum
                             </button>
                             <button
                               onClick={() => handlePublishToggle(course)}
-                              className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 font-semibold text-xs transition"
+                              className="px-3 py-2.5 rounded-xl bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 font-semibold text-xs transition cursor-pointer"
                             >
                               {course.isPublished ? "Unpublish" : "Publish"}
                             </button>
                             <button
                               onClick={() => handleDeleteCourse(course._id)}
-                              className="p-2 rounded-xl bg-red-600/10 hover:bg-red-600/20 border border-red-500/25 text-red-400 hover:text-red-300 transition"
+                              className="p-2.5 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 transition cursor-pointer"
                             >
                               <FaTrash />
                             </button>
@@ -527,32 +525,32 @@ function Dashboard() {
       {/* ========================================================================= */}
       {/* 🚀 CREATE COURSE DIALOG MODAL                                              */}
       {/* ========================================================================= */}
-      <AnimatePresence>
+      <AnimatePresenceFramer>
         {showCreateModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Overlay */}
-            <motion.div
+            <motionFramer.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowCreateModal(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            ></motion.div>
+              className="absolute inset-0 bg-zinc-900/60 backdrop-blur-sm"
+            ></motionFramer.div>
 
             {/* Content Card */}
-            <motion.div
+            <motionFramer.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-xl bg-gray-900 border border-white/10 rounded-3xl p-6 sm:p-8 text-white z-10 shadow-2xl space-y-6"
+              className="relative w-full max-w-xl bg-white border border-zinc-200 rounded-3xl p-6 sm:p-8 text-zinc-800 z-10 shadow-2xl space-y-6"
             >
               <div className="flex justify-between items-center">
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold text-zinc-800 tracking-tight">
                   Create New Course
                 </h3>
                 <button
                   onClick={() => setShowCreateModal(false)}
-                  className="p-2 rounded-full hover:bg-white/10 transition text-gray-400 hover:text-white"
+                  className="p-2 rounded-full hover:bg-zinc-100 transition text-zinc-400 hover:text-zinc-700 cursor-pointer"
                   aria-label="Close modal"
                 >
                   <FaTimes />
@@ -561,34 +559,34 @@ function Dashboard() {
 
               <form onSubmit={handleCreateCourse} className="space-y-4">
                 <div>
-                  <label className="text-xs font-bold text-purple-300 uppercase tracking-wider block mb-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">
                     Course Title
                   </label>
                   <input
                     ref={courseTitle}
                     type="text"
                     placeholder="e.g. Master React 19 from Scratch"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-500 outline-none"
+                    className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-zinc-800 font-medium text-sm"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-purple-300 uppercase tracking-wider block mb-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">
                     Course Description
                   </label>
                   <textarea
                     ref={courseDesc}
                     rows={4}
                     placeholder="Provide a detailed roadmap, prerequisites, and features of your course..."
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-500 outline-none"
+                    className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-zinc-800 font-medium text-sm"
                     required
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-bold text-purple-300 uppercase tracking-wider block mb-2">
+                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">
                       Price ($)
                     </label>
                     <input
@@ -596,22 +594,22 @@ function Dashboard() {
                       type="number"
                       step="0.01"
                       placeholder="0.00 (Leave free)"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-500 outline-none"
+                      className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none text-zinc-800 font-medium text-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-purple-300 uppercase tracking-wider block mb-2">
+                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-2">
                       Course Thumbnail
                     </label>
-                    <div className="border border-dashed border-white/15 hover:border-purple-500/40 rounded-xl p-2.5 text-center cursor-pointer relative group transition-colors">
+                    <div className="border-2 border-dashed border-zinc-200 hover:border-indigo-500/40 rounded-xl p-2.5 text-center cursor-pointer relative group transition-colors">
                       <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => setCourseThumbnail(e.target.files[0])}
                         className="absolute inset-0 opacity-0 cursor-pointer"
                       />
-                      <span className="text-xs font-semibold text-purple-400 block group-hover:scale-105 transition-transform truncate">
+                      <span className="text-xs font-bold text-indigo-600 block group-hover:scale-105 transition-transform truncate">
                         {courseThumbnail ? courseThumbnail.name : "Select Image File"}
                       </span>
                     </div>
@@ -621,15 +619,15 @@ function Dashboard() {
                 <button
                   type="submit"
                   disabled={createLoading}
-                  className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-xl shadow-md hover:scale-[1.02] transition"
+                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md hover:scale-[1.01] transition-all cursor-pointer text-sm"
                 >
                   {createLoading ? "Creating Course..." : "Create & Launch"}
                 </button>
               </form>
-            </motion.div>
+            </motionFramer.div>
           </div>
         )}
-      </AnimatePresence>
+      </AnimatePresenceFramer>
     </>
   );
 }

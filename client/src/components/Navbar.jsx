@@ -31,32 +31,38 @@ function Navbar() {
 
   return (
     <>
-      {/* 🌌 Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-gradient-to-r from-gray-900/80 via-gray-800/60 to-gray-900/80 border-b border-gray-700/40 shadow-md">
+      {/* 🌌 Frosted Light-Medium Navbar */}
+      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 border-b border-[#e8e6df] shadow-sm">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
           {/* 🌱 Brand */}
           <div
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-3 cursor-pointer group"
             onClick={() => navigate("/")}
           >
             <img
               src="/logo.png"
               alt="GrowTogether Logo"
-              className="h-10 w-10 object-contain rounded-full border border-purple-400/30 shadow-sm"
+              className="h-10 w-10 object-contain rounded-full border border-zinc-200 shadow-sm transition-transform group-hover:rotate-6"
             />
-            <span className="text-xl font-semibold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hidden sm:block">
+            <span className="text-xl font-bold bg-gradient-to-r from-indigo-700 via-zinc-800 to-indigo-950 bg-clip-text text-transparent hidden sm:block tracking-tight">
               GrowTogether
             </span>
           </div>
 
           {/* 💻 Desktop Menu */}
           <div className="hidden lg:flex items-center gap-6">
+            <button
+              onClick={() => navigate("/courses")}
+              className="text-zinc-600 hover:text-indigo-600 transition-colors font-medium text-sm cursor-pointer"
+            >
+              Explore Courses
+            </button>
             {userData ? (
               <>
                 {userData.role === "educator" && (
                   <button
                     onClick={() => navigate("/dashboard")}
-                    className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white hover:scale-105 transition-transform shadow-md"
+                    className="px-5 py-2.5 rounded-full bg-indigo-600 text-white font-semibold hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition shadow-sm text-sm cursor-pointer"
                   >
                     Dashboard
                   </button>
@@ -66,7 +72,7 @@ function Navbar() {
                 <div className="relative">
                   <div
                     onClick={() => setShowProfileOptions((prev) => !prev)}
-                    className="w-11 h-11 rounded-full overflow-hidden border-2 border-purple-400/60 cursor-pointer hover:scale-105 transition-transform"
+                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-indigo-100 cursor-pointer hover:border-indigo-400 hover:scale-[1.02] active:scale-[0.98] transition"
                   >
                     <img
                       src={userData.imageUrl || "/src/assets/profile-icon.png"}
@@ -81,15 +87,19 @@ function Navbar() {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.25 }}
-                        className="absolute right-0 mt-3 w-48 bg-gray-900/90 text-gray-100 rounded-xl shadow-lg border border-gray-700/40 backdrop-blur-lg overflow-hidden"
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-3 w-48 bg-white text-zinc-700 rounded-2xl shadow-xl border border-zinc-150 backdrop-blur-md overflow-hidden"
                       >
+                        <div className="px-4 py-3 bg-zinc-50 border-b border-zinc-100">
+                          <p className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Signed in as</p>
+                          <p className="text-sm font-bold text-zinc-800 truncate">{userData.name}</p>
+                        </div>
                         <button
                           onClick={() => {
                             navigate("/profile");
                             setShowProfileOptions(false);
                           }}
-                          className="block w-full text-left px-4 py-2 hover:bg-purple-700/30"
+                          className="block w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-50 hover:text-indigo-600 transition-colors cursor-pointer"
                         >
                           My Profile
                         </button>
@@ -98,14 +108,14 @@ function Navbar() {
                             navigate("/my-courses");
                             setShowProfileOptions(false);
                           }}
-                          className="block w-full text-left px-4 py-2 hover:bg-purple-700/30"
+                          className="block w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-50 hover:text-indigo-600 transition-colors cursor-pointer"
                         >
                           My Courses
                         </button>
-                        <hr className="border-gray-700/50" />
+                        <hr className="border-zinc-100" />
                         <button
                           onClick={handleLogout}
-                          className="block w-full text-left px-4 py-2 hover:bg-red-600/30 text-red-400"
+                          className="block w-full text-left px-4 py-2.5 text-sm hover:bg-red-50 text-red-600 transition-colors font-medium cursor-pointer"
                         >
                           Logout
                         </button>
@@ -118,13 +128,13 @@ function Navbar() {
               <>
                 <button
                   onClick={() => navigate("/login")}
-                  className="px-5 py-2 rounded-full border border-purple-400/40 text-gray-100 hover:bg-purple-700/30 transition-all"
+                  className="px-5 py-2.5 rounded-full border border-zinc-200 text-zinc-700 hover:bg-zinc-50 font-semibold text-sm transition-all cursor-pointer"
                 >
                   Login
                 </button>
                 <button
                   onClick={() => navigate("/signup")}
-                  className="px-5 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full shadow-md hover:shadow-purple-600/40 hover:scale-105 transition-transform"
+                  className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow-sm hover:scale-[1.02] active:scale-[0.98] transition cursor-pointer text-sm"
                 >
                   Sign Up
                 </button>
@@ -135,82 +145,96 @@ function Navbar() {
           {/* 🍔 Mobile Hamburger */}
           <div className="lg:hidden">
             <GiHamburgerMenu
-              className="w-7 h-7 cursor-pointer text-purple-300 hover:text-white transition"
+              className="w-6 h-6 cursor-pointer text-zinc-700 hover:text-indigo-600 transition"
               onClick={() => setShowMenu(true)}
             />
           </div>
         </div>
       </nav>
 
-      {/* 📱 Mobile Menu (Animated) */}
+      {/* 📱 Mobile Menu (Animated Light-Medium) */}
       <AnimatePresence>
         {showMenu && (
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 90, damping: 20 }}
-            className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 flex flex-col items-center justify-center gap-6 text-white z-[999] backdrop-blur-xl"
+            transition={{ type: "spring", stiffness: 100, damping: 22 }}
+            className="fixed top-0 left-0 w-full h-full bg-white/98 flex flex-col items-center justify-center gap-6 text-zinc-800 z-[999] backdrop-blur-xl"
           >
             {/* ❌ Close Button */}
             <button
               onClick={() => setShowMenu(false)}
-              className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+              className="absolute top-5 right-5 p-3 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 transition-all cursor-pointer"
               aria-label="Close menu"
             >
-              <RxCross1 className="w-6 h-6" />
+              <RxCross1 className="w-5 h-5" />
             </button>
 
             {/* 🌈 Menu Content */}
+            <button
+              onClick={() => {
+                navigate("/courses");
+                setShowMenu(false);
+              }}
+              className="text-lg font-semibold text-zinc-700 hover:text-indigo-600 transition-colors"
+            >
+              Explore Courses
+            </button>
+            
             {userData ? (
               <>
-                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-purple-400 shadow-xl">
+                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-indigo-100 shadow-md">
                   <img
                     src={userData.imageUrl || "/src/assets/profile-icon.png"}
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />
                 </div>
+                <p className="text-lg font-bold text-zinc-800 -mt-2">{userData.name}</p>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     navigate("/profile");
                     setShowMenu(false);
                   }}
-                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                  className="w-64 py-3 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-semibold shadow-sm transition"
                 >
                   My Profile
                 </motion.button>
 
                 {userData.role === "educator" && (
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       navigate("/dashboard");
                       setShowMenu(false);
                     }}
-                    className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                    className="w-64 py-3 rounded-full bg-indigo-600 text-white font-semibold shadow-sm hover:bg-indigo-700 transition"
                   >
                     Dashboard
                   </motion.button>
                 )}
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     navigate("/my-courses");
                     setShowMenu(false);
                   }}
-                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                  className="w-64 py-3 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-semibold shadow-sm transition"
                 >
                   My Courses
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  onClick={handleLogout}
-                  className="w-64 py-3 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white shadow-md"
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    handleLogout();
+                    setShowMenu(false);
+                  }}
+                  className="w-64 py-3 rounded-full bg-red-50 hover:bg-red-100 text-red-600 font-semibold shadow-sm transition"
                 >
                   Logout
                 </motion.button>
@@ -218,23 +242,23 @@ function Navbar() {
             ) : (
               <>
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     navigate("/login");
                     setShowMenu(false);
                   }}
-                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-blue-700 text-white shadow-md"
+                  className="w-64 py-3 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-semibold shadow-sm transition"
                 >
                   Login
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     navigate("/signup");
                     setShowMenu(false);
                   }}
-                  className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-700 to-pink-600 text-white shadow-md"
+                  className="w-64 py-3 rounded-full bg-indigo-600 text-white font-semibold shadow-sm hover:bg-indigo-700 transition"
                 >
                   Sign Up
                 </motion.button>
@@ -248,3 +272,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

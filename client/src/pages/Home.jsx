@@ -17,7 +17,6 @@ import {
 import { IoSearch } from "react-icons/io5";
 import { MdGroups } from "react-icons/md";
 import { BsBuildingCheck } from "react-icons/bs";
-
 function Home() {
   const navigate = useNavigate();
   const { userData } = useSelector((state) => state.user);
@@ -39,10 +38,10 @@ function Home() {
       <Navbar />
 
       {/* 🚀 Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white px-6">
-        {/* Glowing Decorative Background Elements */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl opacity-60 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#faf9f5] text-zinc-800 px-6">
+        {/* Soft Decorative Background Elements */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl opacity-50 animate-pulse"></div>
 
         {/* Hero Content */}
         <motion.div
@@ -55,89 +54,72 @@ function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-md"
+            className="px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-widest inline-block mb-6 shadow-sm"
           >
-            The Knowledge Exchange Hub 🌐
+            We Are All Learners & We Are All Teachers 🌐
           </motion.span>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent leading-tight drop-shadow-xl">
-            Where Creators Teach <br />& Learners Thrive
+          <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight text-center drop-shadow-sm">
+            <span className="black-shining-text">You Know Nothing <br />Even If You Know Everything</span>
           </h1>
 
-          <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            WeLearn is the ultimate ecosystem built to unite passionate educators and curious minds. 
-            Whether you want to build structured video courses and share your skills, or stream premium lectures and expand your knowledge, this platform is made for you.
+          <p className="mt-8 text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mx-auto font-medium">
+            The world is full of knowledge. Everyone has something to teach, and everyone has gaps to fill. 
+            We designed this ecosystem for collaborative sharing: enabling students to teach what they know best, and teachers to learn where they lack skills.
           </p>
 
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => navigate("/courses")}
-              className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-full shadow-lg hover:shadow-purple-600/40 transition-all cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-full shadow-md hover:shadow-indigo-600/10 transition-all cursor-pointer"
             >
-              <span>Explore Catalog</span>
+              <span>Explore What to Learn</span>
               <IoSearch className="text-xl" />
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleStartTeaching}
-              className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-pink-500 text-white font-bold rounded-full shadow-lg hover:shadow-blue-600/40 transition-all cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white font-bold rounded-full shadow-md hover:shadow-zinc-800/10 transition-all cursor-pointer"
             >
-              <span>Become a Creator</span>
+              <span>Share What You Know</span>
               <FaChalkboardTeacher className="text-xl" />
             </motion.button>
           </div>
         </motion.div>
-
-        {/* Hero Image / Mockup */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="relative mt-20 w-full max-w-5xl px-4"
-        >
-          <img
-            src="/src/assets/welearn-hero.png"
-            alt="WeLearn Online Courses"
-            className="rounded-3xl shadow-2xl border border-white/10 hover:border-purple-500/30 transition-all duration-500 mb-20 object-cover"
-          />
-        </motion.div>
       </section>
 
       {/* 📜 Glowing Quotations Banner */}
-      <section className="py-20 bg-gray-950 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-purple-950/10 to-gray-950"></div>
+      <section className="py-24 bg-[#f5f4ef] border-y border-[#e8e6df] relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white/5 border border-white/10 p-8 sm:p-12 rounded-3xl backdrop-blur-xl shadow-2xl relative"
+            className="bg-white border border-[#e8e6df] p-8 sm:p-12 rounded-3xl shadow-sm relative"
           >
-            <FaQuoteLeft className="text-4xl text-purple-400/30 mx-auto mb-6" />
-            <blockquote className="text-xl sm:text-2xl font-medium text-gray-200 italic leading-relaxed">
-              "The beautiful thing about learning is that no one can take it away from you — and the beautiful thing about teaching is that it multiplies when shared. WeLearn is engineered to make both simple, beautiful, and accessible."
+            <FaQuoteLeft className="text-4xl text-indigo-400/20 mx-auto mb-6" />
+            <blockquote className="text-xl sm:text-2xl font-semibold text-zinc-700 italic leading-relaxed">
+              "Everyone is a learner in this world. The world is full of knowledge; you know nothing even if you know everything. The moment you believe you have nothing left to learn is the moment you stop growing."
             </blockquote>
-            <cite className="block mt-6 text-sm text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-bold uppercase tracking-widest">
-              — The WeLearn Manifesto
+            <cite className="block mt-6 text-sm text-indigo-600 font-bold uppercase tracking-widest">
+              — The GrowTogether Philosophy
             </cite>
           </motion.div>
         </div>
       </section>
 
       {/* 👥 The Dual Hub: Creators vs Learners Banner */}
-      <section className="py-24 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 px-6 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl"></div>
-        
+      <section className="py-24 bg-[#faf9f5] px-6 relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10 space-y-16">
           <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white">
-              Who is this platform <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">made for?</span>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-zinc-800">
+              How do you want to <span className="text-indigo-600">participate today?</span>
             </h2>
-            <p className="text-gray-400 max-w-xl mx-auto">
-              We designed WeLearn with two distinct, interconnected experiences. Select your journey below:
+            <p className="text-zinc-500 max-w-xl mx-auto font-medium text-base">
+              Everyone switches roles. Select your focus area below, and update it anytime from your profile page:
             </p>
           </div>
 
@@ -145,53 +127,51 @@ function Home() {
             
             {/* Card 1: Content Creators / Teachers */}
             <motion.div
-              whileHover={{ y: -6 }}
-              className="bg-gradient-to-br from-purple-900/20 via-gray-950/40 to-gray-950/60 border border-purple-500/20 hover:border-purple-400/40 p-8 sm:p-10 rounded-3xl flex flex-col justify-between backdrop-blur-md shadow-xl transition-all"
+              whileHover={{ y: -4 }}
+              className="bg-white border border-[#e8e6df] hover:border-indigo-200 p-8 sm:p-10 rounded-3xl flex flex-col justify-between shadow-sm transition-all"
             >
               <div className="space-y-6">
-                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl shadow-inner">
+                <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 text-2xl shadow-inner">
                   <FaChalkboardTeacher />
                 </div>
-                <h3 className="text-2xl font-bold text-white">
-                  For Knowledge Creators & Teachers 🎨
+                <h3 className="text-2xl font-bold text-zinc-800">
+                  Teach What You Know Best 🎨
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  Have a skillset to share? Turn your expertise into high-quality video courses. 
-                  Our educator panel provides stats tracking, instant publish states, and easy video lecture uploading. 
-                  Empower learners, grow your personal brand, and make teaching a rewarding journey.
+                <p className="text-zinc-600 text-sm leading-relaxed font-medium">
+                  Are you a student with a unique perspective or deep knowledge in a niche? Step up and teach! 
+                  Create structured video lectures, share your insights, build your personal brand, and multiply knowledge by sharing it.
                 </p>
               </div>
               <button
                 onClick={handleStartTeaching}
-                className="mt-8 inline-flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-xl shadow-lg hover:scale-[1.02] transition-transform"
+                className="mt-8 inline-flex items-center justify-center gap-2 w-full py-4 bg-zinc-900 hover:bg-zinc-800 text-white font-bold rounded-2xl shadow-md transition-colors cursor-pointer"
               >
-                Start Creator Account <FaArrowRight />
+                Share Your Expertise <FaArrowRight />
               </button>
             </motion.div>
 
             {/* Card 2: Students / Learners */}
             <motion.div
-              whileHover={{ y: -6 }}
-              className="bg-gradient-to-br from-blue-900/20 via-gray-950/40 to-gray-950/60 border border-blue-500/20 hover:border-blue-400/40 p-8 sm:p-10 rounded-3xl flex flex-col justify-between backdrop-blur-md shadow-xl transition-all"
+              whileHover={{ y: -4 }}
+              className="bg-white border border-[#e8e6df] hover:border-indigo-200 p-8 sm:p-10 rounded-3xl flex flex-col justify-between shadow-sm transition-all"
             >
               <div className="space-y-6">
-                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-2xl shadow-inner">
+                <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 text-2xl shadow-inner">
                   <FaLightbulb />
                 </div>
-                <h3 className="text-2xl font-bold text-white">
-                  For Students & Lifelong Learners 🎓
+                <h3 className="text-2xl font-bold text-zinc-800">
+                  Learn Where You Lack 🎓
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  Want to master React 19, Tailwind CSS v4, or secure database patterns? 
-                  Search our expert-guided courses, watch free lectures previews, enroll in a click, 
-                  and stream lessons. Learn at your own pace with a clean dashboard tracking all your enrollments.
+                <p className="text-zinc-600 text-sm leading-relaxed font-medium">
+                  Are you an experienced educator or developer looking to keep up with React 19, new security patterns, or soft skills? 
+                  Explore peer-led materials, register in seconds, and expand your skillset.
                 </p>
               </div>
               <button
                 onClick={() => navigate("/courses")}
-                className="mt-8 inline-flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl shadow-lg hover:scale-[1.02] transition-transform"
+                className="mt-8 inline-flex items-center justify-center gap-2 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-md transition-colors cursor-pointer"
               >
-                Browse Our Curriculum <FaArrowRight />
+                Explore Catalog & Learn <FaArrowRight />
               </button>
             </motion.div>
 
@@ -200,66 +180,67 @@ function Home() {
       </section>
 
       {/* 🌟 Statistics / Highlights Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 relative overflow-hidden">
+      <section className="py-24 bg-[#f5f4ef] border-t border-[#e8e6df] relative overflow-hidden">
         <div className="relative z-10 max-w-6xl mx-auto text-center px-6">
-          <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-12">
-            Why Enthusiasts <span className="text-pink-400">Choose WeLearn</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-zinc-800 mb-12">
+            Why Enthusiasts Choose <span className="text-indigo-600">GrowTogether</span>
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Stat 1 */}
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex flex-col items-center bg-white/5 backdrop-blur-md rounded-3xl shadow-xl p-6 hover:bg-white/10 transition-all border border-white/10"
+              whileHover={{ scale: 1.02 }}
+              className="flex flex-col items-center bg-white rounded-3xl shadow-sm p-6 border border-[#e8e6df]"
             >
-              <FaLaptopCode className="text-4xl text-blue-400 mb-3" />
-              <h3 className="text-2xl font-semibold text-white">500+</h3>
-              <p className="text-gray-400 mt-1 text-sm">Expert-Led Courses</p>
+              <FaLaptopCode className="text-4xl text-indigo-600 mb-3" />
+              <h3 className="text-3xl font-extrabold text-zinc-800">500+</h3>
+              <p className="text-zinc-500 mt-1 text-sm font-semibold">Expert-Led Courses</p>
             </motion.div>
 
             {/* Stat 2 */}
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex flex-col items-center bg-white/5 backdrop-blur-md rounded-3xl shadow-xl p-6 hover:bg-white/10 transition-all border border-white/10"
+              whileHover={{ scale: 1.02 }}
+              className="flex flex-col items-center bg-white rounded-3xl shadow-sm p-6 border border-[#e8e6df]"
             >
-              <MdGroups className="text-4xl text-purple-400 mb-3" />
-              <h3 className="text-2xl font-semibold text-white">20K+</h3>
-              <p className="text-gray-400 mt-1 text-sm">Active Learners</p>
+              <MdGroups className="text-4xl text-amber-600 mb-3" />
+              <h3 className="text-3xl font-extrabold text-zinc-800">20K+</h3>
+              <p className="text-zinc-500 mt-1 text-sm font-semibold">Active Learners</p>
             </motion.div>
 
             {/* Stat 3 */}
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex flex-col items-center bg-white/5 backdrop-blur-md rounded-3xl shadow-xl p-6 hover:bg-white/10 transition-all border border-white/10"
+              whileHover={{ scale: 1.02 }}
+              className="flex flex-col items-center bg-white rounded-3xl shadow-sm p-6 border border-[#e8e6df]"
             >
-              <BsBuildingCheck className="text-4xl text-blue-300 mb-3" />
-              <h3 className="text-2xl font-semibold text-white">1.5K+</h3>
-              <p className="text-gray-400 mt-1 text-sm">Mentorship Sessions</p>
+              <BsBuildingCheck className="text-4xl text-emerald-600 mb-3" />
+              <h3 className="text-3xl font-extrabold text-zinc-800">1.5K+</h3>
+              <p className="text-zinc-500 mt-1 text-sm font-semibold">Mentorship Sessions</p>
             </motion.div>
 
             {/* Stat 4 */}
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex flex-col items-center bg-white/5 backdrop-blur-md rounded-3xl shadow-xl p-6 hover:bg-white/10 transition-all border border-white/10"
+              whileHover={{ scale: 1.02 }}
+              className="flex flex-col items-center bg-white rounded-3xl shadow-sm p-6 border border-[#e8e6df]"
             >
-              <FaUserGraduate className="text-4xl text-pink-400 mb-3" />
-              <h3 className="text-2xl font-semibold text-white">98%</h3>
-              <p className="text-gray-400 mt-1 text-sm">Learner Satisfaction</p>
+              <FaUserGraduate className="text-4xl text-pink-600 mb-3" />
+              <h3 className="text-3xl font-extrabold text-zinc-800">98%</h3>
+              <p className="text-zinc-500 mt-1 text-sm font-semibold">Learner Satisfaction</p>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 text-center text-gray-500 text-sm border-t border-white/10 bg-gray-950">
-        <p className="mb-2">
+      <footer className="py-16 text-center text-zinc-500 text-sm border-t border-[#e8e6df] bg-[#faf9f5]">
+        <p className="mb-2 font-semibold text-zinc-600">
           © {new Date().getFullYear()}{" "}
-          <span className="font-semibold text-purple-400">WeLearn Hub</span> — Empowering continuous learning, skill sharing, and community growth for creators and students.
+          <span className="font-extrabold text-indigo-600">GrowTogether Hub</span> — Empowering continuous learning, skill sharing, and community growth for creators and students.
         </p>
-        <p className="text-xs text-gray-600">Built with passion for the next generation of online learning.</p>
+        <p className="text-xs text-zinc-400">Built with passion for the next generation of online learning.</p>
       </footer>
     </>
   );
 }
 
 export default Home;
+

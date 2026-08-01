@@ -88,8 +88,8 @@ function CourseDetails() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gray-950 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-400"></div>
+        <div className="min-h-screen bg-[#faf9f5] flex justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-650"></div>
         </div>
       </>
     );
@@ -99,12 +99,12 @@ function CourseDetails() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gray-950 text-white flex flex-col justify-center items-center px-6">
-          <FaBookOpen className="text-6xl text-purple-400 mb-4" />
+        <div className="min-h-screen bg-[#faf9f5] text-zinc-800 flex flex-col justify-center items-center px-6">
+          <FaBookOpen className="text-6xl text-indigo-600 mb-4" />
           <h2 className="text-3xl font-bold">Course Not Found</h2>
           <button
             onClick={() => navigate("/courses")}
-            className="mt-6 px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full font-semibold"
+            className="mt-6 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-semibold transition"
           >
             Browse Courses
           </button>
@@ -119,10 +119,10 @@ function CourseDetails() {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white pt-28 pb-20 px-6 relative overflow-hidden">
-        {/* Background blobs */}
-        <div className="absolute top-20 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+      <div className="min-h-screen bg-[#faf9f5] text-zinc-800 pt-32 pb-20 px-6 relative overflow-hidden">
+        {/* Soft decorative blobs */}
+        <div className="absolute top-20 right-10 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl opacity-40"></div>
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl opacity-40"></div>
 
         <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
           
@@ -130,7 +130,7 @@ function CourseDetails() {
           <div className="lg:col-span-2 space-y-6">
             
             {/* Video Player / Course Poster */}
-            <div className="aspect-video bg-black/40 rounded-3xl border border-white/10 overflow-hidden relative shadow-2xl backdrop-blur-md">
+            <div className="aspect-video bg-zinc-900 rounded-3xl border border-zinc-200 overflow-hidden relative shadow-md">
               {hasAccess && activeLecture && activeLecture.videoUrl ? (
                 <video
                   src={activeLecture.videoUrl}
@@ -146,7 +146,7 @@ function CourseDetails() {
                     className="w-full h-full object-contain"
                     poster={course.thumbnailUrl}
                   />
-                  <div className="absolute top-4 left-4 bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md z-10 flex items-center gap-1.5">
+                  <div className="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10 flex items-center gap-1.5">
                     <FaEye /> Free Preview
                   </div>
                 </div>
@@ -157,19 +157,19 @@ function CourseDetails() {
                     alt={course.title}
                     className="w-full h-full object-cover filter blur-sm opacity-50"
                   />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-zinc-950/70">
                     <div className="w-16 h-16 bg-white/10 border border-white/20 rounded-full flex items-center justify-center mb-4">
-                      <FaLock className="text-2xl text-purple-300" />
+                      <FaLock className="text-2xl text-white" />
                     </div>
-                    <h3 className="text-xl font-bold">Enroll to Unlock All Lectures</h3>
-                    <p className="text-sm text-gray-400 mt-2 max-w-sm">
+                    <h3 className="text-xl font-bold text-white">Enroll to Unlock All Lectures</h3>
+                    <p className="text-sm text-zinc-350 mt-2 max-w-sm">
                       Get unlimited lifetime access to all lectures, videos, and materials.
                     </p>
                     {!hasAccess && (
                       <button
                         onClick={handleEnroll}
                         disabled={enrollLoading}
-                        className="mt-6 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-105 transition-transform font-bold rounded-full shadow-lg"
+                        className="mt-6 px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white transition-colors font-bold rounded-full shadow-lg cursor-pointer"
                       >
                         {enrollLoading ? "Enrolling..." : course.price === 0 ? "Enroll for Free" : `Enroll Now - $${course.price}`}
                       </button>
@@ -181,45 +181,45 @@ function CourseDetails() {
 
             {/* Active Lecture Details */}
             {activeLecture && (hasAccess || activeLecture.isFreePreview) && (
-              <div className="bg-white/5 rounded-3xl border border-white/10 p-6 backdrop-blur-md">
-                <span className="text-xs font-semibold text-purple-400 uppercase tracking-widest">
+              <div className="bg-white rounded-3xl border border-[#e8e6df] p-6 shadow-sm">
+                <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">
                   Playing Lecture
                 </span>
-                <h2 className="text-2xl font-bold mt-1 text-white">{activeLecture.title}</h2>
+                <h2 className="text-2xl font-bold mt-1 text-zinc-800">{activeLecture.title}</h2>
                 {activeLecture.description && (
-                  <p className="text-gray-300 mt-3 text-sm leading-relaxed">{activeLecture.description}</p>
+                  <p className="text-zinc-600 mt-3 text-sm leading-relaxed font-medium">{activeLecture.description}</p>
                 )}
               </div>
             )}
 
             {/* Course Information */}
-            <div className="bg-white/5 rounded-3xl border border-white/10 p-8 backdrop-blur-md space-y-6">
+            <div className="bg-white rounded-3xl border border-[#e8e6df] p-8 shadow-sm space-y-6">
               <div>
-                <h1 className="text-3xl font-extrabold text-white">{course.title}</h1>
-                <p className="text-gray-300 mt-4 leading-relaxed text-sm">{course.description}</p>
+                <h1 className="text-3xl font-extrabold text-zinc-800 tracking-tight">{course.title}</h1>
+                <p className="text-zinc-600 mt-4 leading-relaxed text-sm font-medium">{course.description}</p>
               </div>
 
               {/* Stats / Badges */}
-              <div className="flex flex-wrap gap-4 pt-6 border-t border-white/10">
-                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-gray-300">
-                  <FaClock className="text-purple-400" />
+              <div className="flex flex-wrap gap-4 pt-6 border-t border-zinc-100">
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-zinc-50 border border-zinc-200 rounded-full text-xs text-zinc-600 font-semibold">
+                  <FaClock className="text-indigo-600" />
                   {course.lectures?.length || 0} Lectures
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-gray-300">
-                  <FaUser className="text-blue-400" />
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-zinc-50 border border-zinc-200 rounded-full text-xs text-zinc-600 font-semibold">
+                  <FaUser className="text-amber-600" />
                   {course.enrolledStudents?.length || 0} Enrolled Students
                 </span>
                 {course.isPublished && (
-                  <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-green-500/20 border border-green-500/30 rounded-full text-xs text-green-300">
-                    <IoCheckmarkCircle />
+                  <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-emerald-50 border border-emerald-200/60 rounded-full text-xs text-emerald-700 font-semibold">
+                    <IoCheckmarkCircle className="text-emerald-600" />
                     Published
                   </span>
                 )}
               </div>
 
               {/* Instructor Card */}
-              <div className="pt-6 border-t border-white/10 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden border border-purple-400/40">
+              <div className="pt-6 border-t border-zinc-100 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full overflow-hidden border border-zinc-200">
                   {course.educator?.imageUrl ? (
                     <img
                       src={course.educator.imageUrl}
@@ -227,15 +227,15 @@ function CourseDetails() {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-purple-700/50 flex items-center justify-center">
-                      <FaUser className="text-white text-sm" />
+                    <div className="w-full h-full bg-indigo-50 flex items-center justify-center">
+                      <FaUser className="text-indigo-400 text-sm" />
                     </div>
                   )}
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Instructed by</p>
-                  <h4 className="text-base font-bold text-gray-200">{course.educator?.name}</h4>
-                  <p className="text-xs text-gray-400">{course.educator?.email}</p>
+                  <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">Instructed by</p>
+                  <h4 className="text-base font-bold text-zinc-700">{course.educator?.name}</h4>
+                  <p className="text-xs text-zinc-500 font-semibold">{course.educator?.email}</p>
                 </div>
               </div>
 
@@ -248,20 +248,20 @@ function CourseDetails() {
             
             {/* Enrollment Status Card (For non-enrolled students) */}
             {!hasAccess && (
-              <div className="bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-purple-500/30 rounded-3xl p-6 backdrop-blur-md text-center space-y-4">
-                <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">
-                  Join WeLearn Community
+              <div className="bg-white border border-[#e8e6df] shadow-sm rounded-3xl p-6 text-center space-y-4">
+                <h3 className="text-xl font-bold text-zinc-800">
+                  Join GrowTogether Hub
                 </h3>
-                <p className="text-xs text-gray-300">
+                <p className="text-xs text-zinc-500 font-semibold leading-relaxed">
                   Learn at your own pace. Gain instant access to certificates, project materials, and discussions.
                 </p>
-                <div className="text-2xl font-extrabold text-white">
+                <div className="text-3xl font-black text-indigo-600">
                   {course.price === 0 ? "Free" : `$${course.price}`}
                 </div>
                 <button
                   onClick={handleEnroll}
                   disabled={enrollLoading}
-                  className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-xl shadow-md hover:scale-105 transition-transform"
+                  className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition-transform cursor-pointer"
                 >
                   {enrollLoading ? "Enrolling..." : "Enroll Now"}
                 </button>
@@ -269,13 +269,13 @@ function CourseDetails() {
             )}
 
             {/* Lectures List */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md flex flex-col">
-              <h3 className="text-lg font-bold mb-4 text-gray-100 flex items-center gap-2">
-                <FaBookOpen className="text-purple-400 text-sm" /> Course Curriculum
+            <div className="bg-white border border-[#e8e6df] shadow-sm rounded-3xl p-6 flex flex-col">
+              <h3 className="text-lg font-bold mb-4 text-zinc-800 flex items-center gap-2">
+                <FaBookOpen className="text-indigo-600 text-sm" /> Course Curriculum
               </h3>
               
               {(!course.lectures || course.lectures.length === 0) ? (
-                <p className="text-sm text-gray-500 text-center py-8">No lectures added yet.</p>
+                <p className="text-sm text-zinc-400 text-center py-8">No lectures added yet.</p>
               ) : (
                 <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                   {course.lectures.map((lecture, index) => {
@@ -288,33 +288,33 @@ function CourseDetails() {
                         onClick={() => handleLectureSelect(lecture)}
                         className={`flex items-center justify-between p-4 rounded-2xl cursor-pointer transition-all border ${
                           isActive
-                            ? "bg-purple-600/20 border-purple-500/50"
-                            : "bg-white/5 border-transparent hover:bg-white/10 hover:border-white/10"
+                            ? "bg-indigo-50/80 border-indigo-200"
+                            : "bg-zinc-50 border-zinc-100 hover:bg-zinc-100/60"
                         }`}
                       >
                         <div className="flex items-center gap-3 pr-2 flex-1">
-                          <span className={`text-xs font-semibold w-6 h-6 rounded-full flex items-center justify-center ${
-                            isActive ? "bg-purple-500 text-white" : "bg-white/10 text-gray-400"
+                          <span className={`text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center ${
+                            isActive ? "bg-indigo-600 text-white" : "bg-zinc-200 text-zinc-500"
                           }`}>
                             {index + 1}
                           </span>
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-semibold text-white truncate">{lecture.title}</h4>
-                            <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{lecture.description || "Video Lecture"}</p>
+                            <h4 className={`text-sm font-bold truncate ${isActive ? "text-indigo-950" : "text-zinc-800"}`}>{lecture.title}</h4>
+                            <p className="text-xs text-zinc-500 mt-0.5 line-clamp-1 font-medium">{lecture.description || "Video Lecture"}</p>
                           </div>
                         </div>
 
                         <div className="flex items-center">
                           {isPlayable ? (
                             lecture.isFreePreview && !hasAccess ? (
-                              <span className="inline-flex items-center gap-1 text-xs text-purple-400 font-semibold px-2 py-0.5 rounded-md bg-purple-500/10 border border-purple-500/20">
+                              <span className="inline-flex items-center gap-1 text-[10px] text-indigo-700 font-bold px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200/50">
                                 <FaEye /> Preview
                               </span>
                             ) : (
-                              <FaPlay className={`text-xs ${isActive ? "text-purple-400 animate-pulse" : "text-gray-400"}`} />
+                              <FaPlay className={`text-xs ${isActive ? "text-indigo-600 animate-pulse" : "text-zinc-400"}`} />
                             )
                           ) : (
-                            <FaLock className="text-xs text-gray-500" />
+                            <FaLock className="text-xs text-zinc-400" />
                           )}
                         </div>
                       </div>
@@ -333,3 +333,4 @@ function CourseDetails() {
 }
 
 export default CourseDetails;
+

@@ -62,68 +62,73 @@ function Signup() {
   };
 
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-950 via-purple-950 to-blue-950">
-      {/* Animated gradient blobs */}
-      <div className="absolute w-80 h-80 bg-purple-600/30 blur-3xl rounded-full -top-24 -left-20 animate-pulse"></div>
-      <div className="absolute w-96 h-96 bg-blue-500/30 blur-3xl rounded-full bottom-0 right-0 animate-pulse"></div>
+    <div className="relative w-screen h-screen flex items-center justify-center overflow-hidden bg-[#faf9f5]">
+      {/* Soft gradient blobs */}
+      <div className="absolute w-80 h-80 bg-indigo-200/20 blur-3xl rounded-full -top-24 -left-20 animate-pulse"></div>
+      <div className="absolute w-96 h-96 bg-amber-200/20 blur-3xl rounded-full bottom-0 right-0 animate-pulse"></div>
 
       <motion.form
         onSubmit={handleSignUp}
-        initial={{ opacity: 0, scale: 0.9, y: 40 }}
+        initial={{ opacity: 0, scale: 0.95, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative w-[90%] sm:w-[450px] bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-8 text-white flex flex-col gap-5"
+        transition={{ duration: 0.5 }}
+        className="relative w-[90%] sm:w-[450px] bg-white border border-[#e8e6df] rounded-3xl shadow-lg p-8 text-zinc-800 flex flex-col gap-5 animate-none"
       >
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-center">
+        <h2 className="text-3xl font-extrabold text-zinc-850 tracking-tight text-center">
           Create Your Account
         </h2>
 
-        <input
-          ref={name}
-          type="text"
-          placeholder="Your Name"
-          className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none"
-        />
-        <input
-          ref={email}
-          type="email"
-          placeholder="Your Email"
-          className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none"
-        />
-        <div className="relative">
+        <div className="space-y-4">
           <input
-            ref={password}
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter Password"
-            className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 pr-10 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+            ref={name}
+            type="text"
+            placeholder="Your Name"
+            className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 text-zinc-800 placeholder-zinc-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none font-medium text-sm"
+            required
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-2.5 text-gray-300 hover:text-white focus:outline-none"
-          >
-            {showPassword ? "🙈" : "👁️"}
-          </button>
+          <input
+            ref={email}
+            type="email"
+            placeholder="Your Email"
+            className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 text-zinc-800 placeholder-zinc-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none font-medium text-sm"
+            required
+          />
+          <div className="relative">
+            <input
+              ref={password}
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter Password"
+              className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 pr-10 text-zinc-800 placeholder-zinc-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none font-medium text-sm"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3 text-zinc-400 hover:text-indigo-650 focus:outline-none"
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
         </div>
 
         {/* Role Selection */}
-        <div className="flex gap-4 justify-center mt-2">
+        <div className="flex gap-4 justify-center py-1">
           <span
             onClick={() => setRole("student")}
-            className={`px-5 py-2 border-2 rounded-xl cursor-pointer ${
+            className={`flex-1 text-center py-2.5 border-2 rounded-xl cursor-pointer font-bold text-sm transition-all ${
               role === "student"
-                ? "border-white bg-white/20"
-                : "border-white/50 hover:border-white"
+                ? "border-indigo-650 bg-indigo-50 text-indigo-700 shadow-sm"
+                : "border-zinc-200 text-zinc-500 hover:border-zinc-350 hover:bg-zinc-50"
             }`}
           >
             Student
           </span>
           <span
             onClick={() => setRole("educator")}
-            className={`px-5 py-2 border-2 rounded-xl cursor-pointer ${
+            className={`flex-1 text-center py-2.5 border-2 rounded-xl cursor-pointer font-bold text-sm transition-all ${
               role === "educator"
-                ? "border-white bg-white/20"
-                : "border-white/50 hover:border-white"
+                ? "border-indigo-650 bg-indigo-50 text-indigo-700 shadow-sm"
+                : "border-zinc-200 text-zinc-500 hover:border-zinc-350 hover:bg-zinc-50"
             }`}
           >
             Educator
@@ -133,7 +138,7 @@ function Signup() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 mt-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-semibold hover:scale-[1.02] transition-transform"
+          className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition-colors cursor-pointer text-sm"
         >
           {loading ? "Signing Up..." : "Sign Up"}
         </button>
@@ -142,15 +147,15 @@ function Signup() {
         <button
           type="button"
           onClick={googleSignUp}
-          className="w-full flex items-center justify-center gap-2 border border-white/30 py-2 rounded-xl hover:bg-white/10 transition mt-2"
+          className="w-full flex items-center justify-center gap-2.5 border border-zinc-200 bg-white hover:bg-zinc-50 py-3 rounded-xl text-zinc-700 font-bold text-sm transition shadow-sm cursor-pointer"
         >
           <img src={google} className="w-5" alt="Google" />
-          <span className="text-white font-medium">Sign Up with Google</span>
+          <span>Sign Up with Google</span>
         </button>
 
         <p
           onClick={() => navigate("/login")}
-          className="text-center text-purple-300 hover:underline cursor-pointer mt-3"
+          className="text-center text-indigo-600 hover:text-indigo-750 underline font-bold cursor-pointer mt-2 text-sm"
         >
           Already have an account? Login
         </p>
